@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .counter{
+            border: 1px solid #000000;
+            margin: 5px;
+            {#background: blue;#}
+            opacity: 0.4;
+        }
+        .counter p{
+            color: black;
+        }
+
+        .value{
+            border: 3px solid #000000;
+        }
+
+        .counter input[type=button]{
+            border: 2px solid #000000;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div class="counter">
+    <p>消息接收：红包  丢消息  发不出  收不到  图片  文件 等</p>
+    <input class='value' type="text" value=0>
+    <input type="button" value="点我啊" onclick="auto_add(this);">
+</div>
+
+<div class="counter">
+    <p>龙信响应效率：（移动端 pc端  mac端 各种报事问（闪退，白屏，崩溃，慢，搜不到人等））</p>
+    <input class='value' type="text" value=0>
+    <input type="button" value="点我啊" onclick="auto_add(this);">
+</div>
+
+<div class="counter">
+    <p>用户权限分配（轻应用灰度问题）</p>
+    <input class='value' type="text" value=0>
+    <input type="button" value="点我啊" onclick="auto_add(this);">
+</div>
+
+<div class="counter">
+    <p>事件请求（审批跑不通   车票确认不了   滴滴不能支付 等）</p>
+    <input class='value' type="text" value=0>
+    <input type="button" value="点我啊" onclick="auto_add(this);">
+</div>
+
+<div class="counter">
+    <p>业务效率需求（用户提需要（想要实现什么功能，））</p>
+    <input class='value' type="text" value=0>
+    <input type="button" value="点我啊" onclick="auto_add(this);">
+</div>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script>
+    function auto_add(ths) {
+        var oBtn=$(ths).prev();
+        var num = parseInt(oBtn.val());
+        num += 1;
+        oBtn.val(num)
+    }
+</script>
+
+</body>
+</html>
