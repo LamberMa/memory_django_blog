@@ -6,3 +6,13 @@ class Article(models.Model):
     pass
 
 
+class Tag(models.Model):
+    pass
+
+
+class Category(models.Model):
+    pass
+
+
+
+
