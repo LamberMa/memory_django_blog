@@ -19,5 +19,8 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home)
+    path('', views.home),
+    path('study/', views.study_models),
+    path('login/', views.login),
+    path('ajax_login/', views.ajax_login),
 ]

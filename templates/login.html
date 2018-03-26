@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Test</title>
+</head>
+<body>
+<form id="f1" method="post">
+    {% csrf_token %}
+    <p>用户名：<input type="text" name="username" />{{ obj.errors.username }}</p>
+    <p>密码：<input type="password" name="password" />{{ obj.errors.password }}</p>
+    <p><a onclick="submitForm();">提交</a></p>
+</form>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script>
+    function submitForm() {
+        $('.c1').remove();
+        $.ajax({
+            url: "/ajax_login/",
+            type: 'POST',
+            data: $('#f1').serialize(), //user=xxx&pwd=xxx&csrf_token=xxx
+            dataType: "JSON",
+            success: function (arg) {
+                console.log(arg);
+                if(arg.status){
+
+                }else{
+                    $.each(arg.msg, function(index, value){
+                        console.log(index, value);
+                        var tag = document.createElement('span');
+                        tag.innerHTML = value[0];
+                        tag.className = 'c1';
+                        $('#f1').find('input[name="' + index + '"]').after(tag)
+                    })
+                }
+            }
+
+        })
+    }
+</script>
+</body>
+</html>
