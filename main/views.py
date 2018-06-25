@@ -5,7 +5,7 @@ from main import models
 from main import form
 
 
-# Create your views here.
+# HomePage
 def home(request):
     return render(request, 'home.html')
 
@@ -24,7 +24,8 @@ def study_models(request):
 
 def login(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        obj = form.LoginForm()
+        return render(request, 'login.html', {'obj': obj})
     else:
         obj = form.LoginForm(request.POST)
         if obj.is_valid():
