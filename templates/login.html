@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-<form id="f1" method="post">
+<div id="loginform">
+    <form class="form-horizontal">
     {% csrf_token %}
-    <p>用户名：{{ obj.username }}{{ obj.errors.username }}</p>
-    <p>密码：{{ obj.password }}{{ obj.errors.password }}</p>
-    <p><a onclick="submitForm();">提交</a></p>
+    <div class="form-group">
+        <label for="inputUsername" class="col-sm-4 control-label">用户名</label>
+        <div class="col-sm-8">
+            {{ obj.username }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+        <div class="col-sm-8">
+            {{ obj.password }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <a onclick="submitForm();" class="btn btn-default">提交</a>
+        </div>
+    </div>
 </form>
+</div>
+
+
+
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script>
     function submitForm() {

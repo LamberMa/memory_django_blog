@@ -1,0 +1,5 @@
+/* reset css */
+* {margin:0;padding:0}
+
+/* 唯一标识的样式 */
+#loginform{width:400px;height:250px;position: absolute;left: 50%;top: 50%;margin-left: -200px;margin-top: -125px;border: 2px solid #000;background: red;}
