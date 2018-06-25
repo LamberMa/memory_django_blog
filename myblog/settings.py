@@ -88,7 +88,7 @@ DATABASES = {
       'NAME': 'myblog',  # 数据库的名称，要先创建好数据库
       'USER': 'lamber',
       'PASSWORD': '13082171785',
-      'HOST': '47.94.132.15',
+      'HOST': '47.105.38.123',
       'PORT': '3306',
     }
 }
