@@ -2,4 +2,7 @@
 * {margin:0;padding:0}
 
 /* 唯一标识的样式 */
-#loginform{width:400px;height:250px;position: absolute;left: 50%;top: 50%;margin-left: -200px;margin-top: -125px;border: 2px solid #000;background: red;}
+#loginform{width:400px;height:250px;position: absolute;left: 50%;top: 50%;margin-left: -200px;margin-top: -125px;border: 2px solid lightgrey;padding: 70px 15px 50px;border-radius: 4px;}
+#loginform .form-group div{}
+#loginform .form-group label{text-align: center;}
+#loginsubmit{width:200px;background-color: #2e6da4;color: white;font-weight: bold;}
