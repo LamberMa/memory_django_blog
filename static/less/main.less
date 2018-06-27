@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+.triangle(top,@width:5px,@color:#ccc){
+  border-width:@width;
+  border-color: transparent transparent @color transparent;
+}
+
+.triangle(bottom,@width:5px,@color:#ccc){
+  border-width:@width;
+  border-color: @color transparent transparent transparent;
+}
+
+.triangle(left,@width:5px,@color:#ccc){
+  border-width:@width;
+  border-color: transparent @color transparent transparent;
+}
+
+.triangle(right,@width:5px,@color:#ccc){
+  border-width:@width;
+  border-color: transparent transparent  transparent @color;
+}
+
+.triangle(@_,@width:5px,@color:#ccc){
+  width: 0;
+  height:0;
+  overflow: hidden;
+}
+
+.border_arg(@w:30px,@c:red,@xx:solid){
+    border:@arguments;
+}
+
+.test_arguments{
+    .border_arg()
+}

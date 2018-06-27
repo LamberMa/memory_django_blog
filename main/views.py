@@ -6,8 +6,11 @@ from main import form
 
 
 # HomePage
-def home(request):
-    return render(request, 'home.html')
+def index(request):
+    return render(request, 'index.html')
+
+def test(request):
+    return render(request, 'test.html')
 
 
 def study_models(request):
