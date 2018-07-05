@@ -1,4 +1,71 @@
 @charset "utf-8";
-.test_arguments {
-  border: 30px #ff0000 solid;
+/* css reset reference https://cssreset.com/ */
+header {
+  background: #F6F9FC;
+  border-bottom: 1px solid #CCCCCC;
+}
+header nav {
+  background: yellow;
+  height: 50px;
+  margin: 0 auto;
+  width: 1170px;
+}
+header nav #logo {
+  float: left;
+  line-height: 50px;
+}
+header nav #logo a {
+  color: #000;
+  height: inherit;
+  line-height: 50px;
+  padding: 0 30px;
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+header nav li {
+  background: green;
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 15px;
+  float: left;
+}
+header nav li a {
+  display: inline-block;
+  background: purple;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  color: #000;
+  text-decoration: none;
+  padding-right: 30px;
+}
+header nav #login-btn {
+  display: inline;
+  background: red;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: #000;
+  float: left;
+  padding-right: 30px;
+}
+header nav .active {
+  background: #CCC;
+}
+header nav #loginform {
+  position: absolute;
+  right: 0;
+  top: 52px;
+  width: 400px;
+  height: 300px;
+  border: 1px solid #5e5e5e;
+  border-radius: 5px;
+  padding: 15px;
+}
+header nav #loginform form {
+  margin: 0 auto;
+}
+header nav #loginform .hide {
+  display: none;
 }

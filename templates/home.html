@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>雨下不停</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+<header>
+    <nav>
+        <span id="logo"><a href="">雨下不停</a></span>
+        <div id="menu" style="float: left">
+            <ul>
+                <li class="active">首页</li>
+                <li><a href="#">待分类2</a></li>
+                <li><a href="#">待分类3</a></li>
+                <li><a href="#">待分类4</a></li>
+                <li><a href="#">待分类5</a></li>
+            </ul>
+        </div>
+        <div id="login-module" style="float: right">
+            <!--如果这里当前没有session中的用户信息的时候才会显示登录的内容-->
+            {% if not request.session.userinfo %}
+                <a href="#" id="login-btn">登录</a>
+                <div id="loginform" class='hide'>
+                    <form class="form-horizontal">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          <label for="inputusername" class="col-sm-3 control-label">用户名</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="username1" placeholder="用户名">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp&nbsp&nbsp&nbsp码</label>
+                          <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password1" placeholder="Password">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-3 control-label">验证码</label>
+                          <div class="col-sm-9" id="popup-captcha">
+
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <a class="btn btn-default" id="popup-submit">登录</a>
+                            <span class="login-error"></span>
+                          </div>
+                      </div>
+                    </form>
+                </div>
+            {% else %}
+                <a href="#">欢迎您，{{ request.session.userinfo.nickname }}</a>
+            {% endif %}
+        </div>
+
+    </nav>
+</header>
+
+<div id="content">
+    <section></section>
+    <aside></aside>
+</div>
+<footer></footer>
+
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<!-- 引入封装了failback的接口--initGeetest -->
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+<script src="/static/js/main.js"></script>
+</body>
+</html>

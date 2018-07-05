@@ -1,35 +1,163 @@
 @charset "utf-8";
 
-.triangle(top,@width:5px,@color:#ccc){
-  border-width:@width;
-  border-color: transparent transparent @color transparent;
-}
+/* css reset reference https://cssreset.com/ */
+//html, body, div, span, applet, object, iframe,
+//h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+//a, abbr, acronym, address, big, cite, code,
+//del, dfn, em, img, ins, kbd, q, s, samp,
+//small, strike, strong, sub, sup, tt, var,
+//b, u, i, center,
+//dl, dt, dd, ol, ul, li,
+//fieldset, form, label, legend,
+//table, caption, tbody, tfoot, thead, tr, th, td,
+//article, aside, canvas, details, embed,
+//figure, figcaption, footer, header, hgroup,
+//menu, nav, output, ruby, section, summary,
+//time, mark, audio, video {
+//	margin: 0;
+//	padding: 0;
+//	border: 0;
+//	font-size: 100%;
+//	font: inherit;
+//	vertical-align: baseline;
+//}
+///* HTML5 display-role reset for older browsers */
+//article, aside, details, figcaption, figure,
+//footer, header, hgroup, menu, nav, section {
+//	display: block;
+//}
+//body {
+//	line-height: 1;
+//}
+//ol, ul {
+//	list-style: none;
+//}
+//blockquote, q {
+//	quotes: none;
+//}
+//blockquote:before, blockquote:after,
+//q:before, q:after {
+//	content: '';
+//	content: none;
+//}
+//table {
+//	border-collapse: collapse;
+//	border-spacing: 0;
+//}
 
-.triangle(bottom,@width:5px,@color:#ccc){
-  border-width:@width;
-  border-color: @color transparent transparent transparent;
-}
+// nav
+//nav{
+//  background: gray;
+//  height: 50px;
+//  ul{float: right;list-style: none;}
+//  li{
+//    list-style: none;
+//    display:inline-block;
+//    line-height: 50px;
+//    float: left;
+//    margin:0 20px 0 0;
+//    a {line-height: 50px;text-decoration: none;display:inline-block;height: inherit;color:#fff;}
+//  }
+//  .logo{
+//    padding-left:20px;
+//    float: left;
+//    font-size:20px;
+//    letter-spacing: 1px;
+//    a {line-height: 50px;text-decoration: none;display:inline-block;height: inherit;color:#fff;}
+//  }
+//}
+//
+//// banner
+//button{border:none;background: #333;color:#eee;padding: 14px 40px;}
+//#banner {
+//  height:700px;
+//  background: lightgray;
+//  .inner{
+//    max-width: 300px;
+//    text-align: center;
+//    margin:0 auto;
+//    position: relative;
+//    top:160px;
+//    h1{margin:0;}
+//    .more{margin-top:290px;}
+//    p.sub-heading{line-height: 30px;margin: 30px;}
+//  }
+//}
 
-.triangle(left,@width:5px,@color:#ccc){
-  border-width:@width;
-  border-color: transparent @color transparent transparent;
-}
+// 新的index界面
+header{
+    background: #F6F9FC;
+    border-bottom: 1px solid #CCCCCC;
+    nav{
+      background: yellow;
+      height:50px;
+      margin: 0 auto;
+      width: 1170px;
+      //position: relative;
 
-.triangle(right,@width:5px,@color:#ccc){
-  border-width:@width;
-  border-color: transparent transparent  transparent @color;
-}
+    #logo{
+      float: left;
+      line-height: 50px;
+      a{
+        color: #000;
+        height: inherit;
+        line-height: 50px;
+        padding: 0 30px;
+        font-size: 23px;
+        font-weight: 400;
+        letter-spacing: 1px;
+      }
+    }
+    li{
+        background: green;
+        display: inline-block;
+        line-height: 50px;
+        padding: 0 15px;
+        float: left;
+        a{
+          display: inline-block;
+          background: purple;
+          text-align: center;
+          height:50px;
+          line-height: 50px;
+          color:#000;
+          text-decoration: none;
+          padding-right: 30px;
+        }
+    }
+    #login-btn{
+      display: inline;
+      background: red;
+      height:50px;
+      line-height: 50px;
+      text-align: center;
+      color: #000;
+      float: left;
+      padding-right: 30px;
 
-.triangle(@_,@width:5px,@color:#ccc){
-  width: 0;
-  height:0;
-  overflow: hidden;
-}
 
-.border_arg(@w:30px,@c:red,@xx:solid){
-    border:@arguments;
-}
 
-.test_arguments{
-    .border_arg()
+
+    }
+
+    .active{
+      background: #CCC;
+    }
+    #loginform{
+      position: absolute;
+      right:0;
+      top:52px;
+      width:400px;
+      height:300px;
+      border:1px solid #5e5e5e;
+      border-radius: 5px;
+      padding: 15px;
+      form{
+        margin: 0 auto;
+      }
+      .hide{
+        display: none
+      }
+    }
+  }
 }

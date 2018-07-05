@@ -19,9 +19,14 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('', views.home),
+    # path('index/', views.home),
+    path('backend/', views.backend),
     path('study/', views.study_models),
     path('test/', views.test),
-    path('login/', views.login),
+    path('login2/', views.login2),
     path('ajax_login/', views.ajax_login),
+    path('pc-geetest/register', views.get_geetest),
+    path('login/', views.login),
+    path('register/', views.register),
 ]

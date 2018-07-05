@@ -133,3 +133,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# 极验验证码的id&key；请在官网申请ID使用，示例ID不可使用
+PC_GEETEST_ID = "891ee859096df2490927b08ed94ce769"
+PC_GEETEST_KEY = "52e60caea2acd42f0db9b268ea8e6806"
+mobile_geetest_id = "7c25da6fe21944cfe507d2f9876775a9"
+mobile_geetest_key = "f5883f4ee3bd4fa8caec67941de1b903"

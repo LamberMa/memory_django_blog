@@ -1,16 +1,62 @@
 import json
 
 from django.shortcuts import render, HttpResponse, redirect
+from django.http import JsonResponse
 from main import models
 from main import form
+from geetest import GeetestLib
+from django.conf import settings
+from django.contrib import auth
 
 
-# HomePage
-def index(request):
-    return render(request, 'index.html')
+def get_geetest(request):
 
-def test(request):
-    return render(request, 'test.html')
+    user_id = 'test'
+    gt = GeetestLib(settings.PC_GEETEST_ID, settings.PC_GEETEST_KEY)
+    status = gt.pre_process(user_id)
+    request.session[gt.GT_STATUS_SESSION_KEY] = status
+    request.session["user_id"] = user_id
+    response_str = gt.get_response_str()
+    return HttpResponse(response_str)
+
+
+def login(request):
+    if request.method == "POST":
+        # 初始化一个字典用于给ajax请求返回数据
+        ret = {'status': 0, 'msg': ''}
+        # 从请求中获取到用户名和密码
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # 获取极验活动验证码相关参数
+        gt = GeetestLib(settings.PC_GEETEST_ID, settings.PC_GEETEST_KEY)
+        challenge = request.POST.get(gt.FN_CHALLENGE, '')
+        validate = request.POST.get(gt.FN_VALIDATE, '')
+        seccode = request.POST.get(gt.FN_SECCODE, '')
+        status = request.session[gt.GT_STATUS_SESSION_KEY]
+        user_id = request.session["user_id"]
+        if status:
+            result = gt.success_validate(challenge, validate, seccode, user_id)
+        else:
+            result = gt.failback_validate(challenge, validate, seccode)
+        if result:
+            # 如果极验返回的这个result是有内容的，说明验证成功
+            user = auth.authenticate(username=username, password=password)
+            if user:
+                # 用户名密码正确，给用户做登录
+                auth.login(request, user)
+                ret['msg'] = "/index/"
+            else:
+                # 用户名密码错误
+                ret['status'] = 1
+                ret['msg'] = "用户名或密码错误"
+        else:
+            ret['status'] = 1
+            ret['msg'] = '验证码错误'
+        return JsonResponse(ret)
+
+
+def register(request):
+    return render(request, 'register.html')
 
 
 def study_models(request):
@@ -25,7 +71,7 @@ def study_models(request):
     })
 
 
-def login(request):
+def login2(request):
     if request.method == 'GET':
         obj = form.LoginForm()
         return render(request, 'login.html', {'obj': obj})
@@ -62,3 +108,18 @@ def ajax_login(request):
     return HttpResponse(v)
 
 
+# HomePage
+def index(request):
+    return render(request, 'index.html')
+
+
+def test(request):
+    return render(request, 'test.html')
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def backend(request):
+    return render(request, 'backend.html')
