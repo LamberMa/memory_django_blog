@@ -4,6 +4,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from main import models
 from main import form
+from main.form import RegisterForm
 from geetest import GeetestLib
 from django.conf import settings
 from django.contrib import auth
@@ -56,7 +57,15 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'register.html')
+
+    if request.method == 'GET':
+        obj = RegisterForm()
+        return render(request, 'register.html', {'obj': obj})
+    else:
+        obj = RegisterForm(request.POST)
+        if obj.is_valid():
+            pass
+        return render(request, 'register.html', {'obj': obj})
 
 
 def study_models(request):
