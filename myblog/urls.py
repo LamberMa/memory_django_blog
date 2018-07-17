@@ -19,7 +19,6 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
     # path('index/', views.home),
     path('backend/', views.backend),
     path('study/', views.study_models),
@@ -29,4 +28,10 @@ urlpatterns = [
     path('pc-geetest/register', views.get_geetest),
     path('login/', views.login),
     path('register/', views.register),
+    # 测试相关的页面
+    path('bootstrap/', views.boot),
+    # 获取验证码
+    path('auth_code/', views.auth_code),
+    # 当没有匹配任何条件的时候就会匹配到默认的首页
+    path('', views.home),
 ]

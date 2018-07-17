@@ -8,6 +8,33 @@ from main.form import RegisterForm
 from geetest import GeetestLib
 from django.conf import settings
 from django.contrib import auth
+from io import BytesIO
+from utils.auth_code import rd_check_code
+
+
+def boot(request):
+    return render(request, 'boot.html')
+
+
+def register(request):
+    """
+    注册相关视图函数
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        print('POST请求过来了！！')
+        # 同时接受用户发过来的数据和文件，我们在这里重新加工了Form类，需要多传递一个request参数
+        obj = RegisterForm(request, request.POST, request.FILES)
+        print(obj)
+        print(type(obj))
+        if obj.is_valid():
+            print(obj.cleaned_data)
+        else:
+            print(obj.errors)
+        return render(request, 'register.html', {'obj': obj})
+    obj = RegisterForm(request)
+    return render(request, 'register.html', {'obj': obj})
 
 
 def get_geetest(request):
@@ -54,18 +81,6 @@ def login(request):
             ret['status'] = 1
             ret['msg'] = '验证码错误'
         return JsonResponse(ret)
-
-
-def register(request):
-
-    if request.method == 'GET':
-        obj = RegisterForm()
-        return render(request, 'register.html', {'obj': obj})
-    else:
-        obj = RegisterForm(request.POST)
-        if obj.is_valid():
-            pass
-        return render(request, 'register.html', {'obj': obj})
 
 
 def study_models(request):
@@ -132,3 +147,17 @@ def home(request):
 
 def backend(request):
     return render(request, 'backend.html')
+
+
+def auth_code(request):
+    """
+    生成验证码并将生成的图片返回给前端
+    :param request: request请求
+    :return: 图片的字节流
+    """
+    img, code = rd_check_code()
+    stream = BytesIO()
+    img.save(stream, 'png')
+    request.session['auth_code'] = code
+    # 把内存中读取到的图片内容返回就可以了。
+    return HttpResponse(stream.getvalue())

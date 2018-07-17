@@ -9,55 +9,46 @@
 </head>
 <body>
 <header>
-    <nav>
-        <span id="logo"><a href="">雨下不停</a></span>
-        <div id="menu" style="float: left">
-            <ul>
-                <li class="active">首页</li>
-                <li><a href="#">待分类2</a></li>
-                <li><a href="#">待分类3</a></li>
-                <li><a href="#">待分类4</a></li>
-                <li><a href="#">待分类5</a></li>
-            </ul>
-        </div>
-        <div id="login-module" style="float: right">
-            <!--如果这里当前没有session中的用户信息的时候才会显示登录的内容-->
-            {% if not request.session.userinfo %}
-                <a href="#" id="login-btn">登录</a>
-                <div id="loginform" class='hide'>
-                    <form class="form-horizontal">
-                      {% csrf_token %}
-                      <div class="form-group">
-                          <label for="inputusername" class="col-sm-3 control-label">用户名</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username1" placeholder="用户名">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp&nbsp&nbsp&nbsp码</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password1" placeholder="Password">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputPassword3" class="col-sm-3 control-label">验证码</label>
-                          <div class="col-sm-9" id="popup-captcha">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- 标题和响应式的button -->
+            <div class="navbar-header">
+                <!--响应式的时候针对移动端的一个button，和三个横线-->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">雨下不停</a>
+            </div>
 
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <a class="btn btn-default" id="popup-submit">登录</a>
-                            <span class="login-error"></span>
-                          </div>
-                      </div>
-                    </form>
-                </div>
-            {% else %}
-                <a href="#">欢迎您，{{ request.session.userinfo.nickname }}</a>
-            {% endif %}
+            <!-- 头部，以及导航内容 -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">登录</a></li>
+                    <li><a href="/register/">注册</a></li>
+                </ul>
+            </div>
         </div>
-
     </nav>
 </header>
 
@@ -65,6 +56,44 @@
     <section></section>
     <aside></aside>
 </div>
+
+{#<div id="login-module" style="float: right">#}
+{#    <!--如果这里当前没有session中的用户信息的时候才会显示登录的内容-->#}
+{#    {% if not request.session.userinfo %}#}
+{#        <a href="#" id="login-btn">登录</a>#}
+{#        <div id="loginform" class='hide'>#}
+{#            <form class="form-horizontal">#}
+{#                {% csrf_token %}#}
+{#                <div class="form-group">#}
+{#                    <label for="inputusername" class="col-sm-3 control-label">用户名</label>#}
+{#                    <div class="col-sm-9">#}
+{#                        <input type="text" class="form-control" id="username1" placeholder="用户名">#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp&nbsp&nbsp&nbsp码</label>#}
+{#                    <div class="col-sm-9">#}
+{#                        <input type="password" class="form-control" id="password1" placeholder="Password">#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="inputPassword3" class="col-sm-3 control-label">验证码</label>#}
+{#                    <div class="col-sm-9" id="popup-captcha">#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <div class="col-sm-offset-2 col-sm-10">#}
+{#                        <a class="btn btn-default" id="popup-submit">登录</a>#}
+{#                        <span class="login-error"></span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <a href="#">欢迎您，{{ request.session.userinfo.nickname }}</a>#}
+{#    {% endif %}#}
+{#</div>#}
 <footer></footer>
 
 

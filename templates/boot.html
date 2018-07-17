@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <title>Title</title>
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .carousel {
+            height: 500px;
+            background: #000000;
+            margin-bottom: 60px;
+        }
+
+        .carousel .item {
+            height: 500px;
+            background: #000000;
+        }
+
+        /* 解决有些图片没有撑开的问题 */
+        .carousel img {
+            width: 100%;
+        }
+
+        .carousel-caption p {
+            margin-bottom: 20px;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        #summary-container .col-md-4 {
+            text-align: center;
+        }
+
+        .divider {
+            margin: 40px 0;
+        }
+
+        .feature {
+            padding: 30px 0;
+        }
+
+        .feature-heading {
+            font-size: 50px;
+            color: #2a6496;
+            margin-top: 120px;
+        }
+
+        .feature-heading .text-muted {
+            font-size: 28px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<!--
+navbar标识这是一个导航条，navbar-default标识这个导航条的样式是默认的，role标识它是一个导航条的角色
+navbar-fixed-top可以使的导航条固定定位，不会随着滚动条的滚动而消失，但是这有一个问题就是固定的导航条
+会遮住页面上的其他内容，除非给body元素设置一个padding，导航条的默认高度是50px;比如设置：
+body{padding-top:70px;}为什么不设置为50，因为50会贴着导航条的，不好看。。不过还是看需求，如果需要贴着
+你就设置50px即可，不想贴着就不要这么用了。
+-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <!--container居中如果是container-fluid的话那么就默认宽度100%铺满整个屏幕-->
+    <div class="container">
+        <!-- 响应式布局，当到达一定的宽度的时候会显示这个，for mobile ，显示出来其实就是一个三横的图标-->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">现代浏览器博物馆</a>
+        </div>
+
+        <!-- 导航条的导航项目，这个id会在上面的响应式的部分被调用使得移动终端也能显示下面的导航项目，依赖js -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">综述 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">简述</a></li>
+                <li class="dropdown">
+                    <!--设置一个data-toggle的属性就可以使用下拉菜单-->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">特点<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"></a></li>
+                        <li><a href="#">Google</a></li>
+                        <li><a href="#">Firefox</a></li>
+                        <li><a href="#">Opear</a></li>
+                        <li><a href="#">Safari</a></li>
+                    </ul>
+                </li>
+                <!--为关于设置弹出框的js操作，弹出的是id为about的弹出框-->
+                <li><a href="#" data-toggle="modal" data-target="#about">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--使用Carousel实现轮播内容，这也是常用的轮播组件：https://v3.bootcss.com/javascript/#transitions
+bootstrap针对这样一些组件都是通过设置data属性来实现的，就好比下面这个轮播图的data-ride='carousel'
+关于下面的内容，分别是通过不同的class来确定各自是什么组件的，比如小点点，控制翻图片的等等。
+可以看到这个大div的id为carousel-example-generic，对应的小点点的data-target属性以及左右控制翻页的
+href属性也是这个内容。
+-->
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- 轮播图下面的聚焦点，小点点，其中data-slide-to表示索引值。 -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+    </ol>
+
+    <!-- 具体的轮播图 -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="/static/imgs/bootimgs/chrome-big.jpg" alt="...">
+            <div class="carousel-caption">
+                <h1>Chrome</h1>
+
+                <p>Google Chrome，又称Google浏览器，是一个由Google（谷歌）公司开发的网页浏览器。</p>
+
+                <p><a class="btn btn-lg btn-primary" href="http://www.google.cn/intl/zh-CN/chrome/browser/"
+                      role="button" target="_blank">点我下载</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="/static/imgs/bootimgs/firefox-big.jpg" alt="...">
+            <div class="carousel-caption">
+                <h1>Firefox</h1>
+
+                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。</p>
+
+                <p><a class="btn btn-lg btn-primary" href="http://www.firefox.com.cn/download/" target="_blank"
+                      role="button">点我下载</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="/static/imgs/bootimgs/ie-big.jpg" alt="...">
+            <div class="carousel-caption">
+                <h1>IE</h1>
+
+                <p>Internet Explorer，简称 IE，是微软公司推出的一款网页浏览器。</p>
+
+                <p><a class="btn btn-lg btn-primary" href="http://ie.microsoft.com/" target="_blank"
+                      role="button">点我下载</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="/static/imgs/bootimgs/opera-big.jpg" alt="...">
+            <div class="carousel-caption">
+                <h1>Opera</h1>
+
+                <p>Opera浏览器，是一款挪威Opera Software ASA公司制作的支持多页面标签式浏览的网络浏览器。</p>
+
+                <p><a class="btn btn-lg btn-primary" href="http://www.opera.com/zh-cn" target="_blank"
+                      role="button">点我下载</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="/static/imgs/bootimgs/safari-big.jpg" alt="...">
+            <div class="carousel-caption">
+                <h1>Safari</h1>
+
+                <p>Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器。</p>
+
+                <p><a class="btn btn-lg btn-primary" href="http://www.apple.com/cn/safari/" target="_blank"
+                      role="button">点我下载</a></p>
+            </div>
+        </div>
+        ...
+    </div>
+
+    <!-- 轮播图组件想做还是向右切换的按钮 -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">上一页</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">下一页</span>
+    </a>
+</div>
+
+<!--三栏布局，利用bootstrap的栅格系统-->
+<div class="container" id="summary-container">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="img-circle" src="/static/imgs/bootimgs/chrome-logo-small.jpg" alt="chrome">
+
+            <h2>Chrome</h2>
+
+            <p>Google Chrome，又称Google浏览器，是一个由Google（谷歌）公司开发的网页浏览器。</p>
+
+            <p><a class="btn btn-default" href="#" role="button">点我下载</a></p>
+        </div>
+        <div class="col-md-4">
+            <img class="img-circle" src="/static/imgs/bootimgs/firefox-logo-small.jpg" alt="firefox">
+
+            <h2>Firefox</h2>
+
+            <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。</p>
+
+            <p><a class="btn btn-default" href="#" role="button">点我下载</a></p>
+        </div>
+        <div class="col-md-4">
+            <img class="img-circle" src="/static/imgs/bootimgs/safari-logo-small.jpg" alt="safari">
+
+            <h2>Safari</h2>
+
+            <p>Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器。</p>
+
+            <p><a class="btn btn-default" href="#" role="button">点我下载</a></p>
+        </div>
+    </div>
+    <!--如果把hr水平线放到container的外面的话它是横穿整个页面的，如果放到container内部就会居中-->
+    <hr class="divider">
+</div>
+
+<!--标签页的做作-->
+<div class="container">
+
+    <!-- 这里是标签，标签是如何找到标签内容的呢？通过class=tab-content去寻找，通过a="#id"去找-->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tab-chrome" aria-controls="home" role="tab"
+                                                  data-toggle="tab">Chrome</a></li>
+        <li role="presentation"><a href="#tab-firefox" aria-controls="profile" role="tab" data-toggle="tab">FireFox</a>
+        </li>
+        <li role="presentation"><a href="#tab-safari" aria-controls="messages" role="tab" data-toggle="tab">Safari</a>
+        </li>
+        <li role="presentation"><a href="#tab-opera" aria-controls="settings" role="tab" data-toggle="tab">Opera</a>
+        <li role="presentation"><a href="#tab-ie" aria-controls="settings" role="tab" data-toggle="tab">IE</a>
+        </li>
+    </ul>
+
+    <!-- 这里是标签的内容 -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="tab-chrome">
+            <div class="row feature">
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">Google Chrome <span
+                            class="text-muted">使用最广的浏览器</span></h2>
+
+                    <p class="lead">Google Chrome，又称Google浏览器，是一个由Google（谷歌）公司开发的网页浏览器。
+                        该浏览器是基于其他开源软件所撰写，包括WebKit，目标是提升稳定性、速度和安全性，并创造出简单且有效率的使用者界面。</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="/static/imgs/bootimgs/chrome-logo.jpg"
+                         alt="Chrome">
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-firefox">
+            <div class="row feature">
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="/static/imgs/bootimgs/firefox-logo.jpg"
+                         alt="Firefox">
+                </div>
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">Mozilla Firefox <span class="text-muted">美丽的狐狸</span>
+                    </h2>
+
+                    <p class="lead">Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器，
+                        使用Gecko引擎（非ie内核），支持多种操作系统如Windows、Mac和linux。</p>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-safari">
+            <div class="row feature">
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">Safari <span class="text-muted">Mac用户首选</span></h2>
+
+                    <p class="lead">Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器，使用了KDE的KHTML作为浏览器的运算核心。
+                        Safari在2003年1月7日首度发行测试版，并成为Mac OS X v10.3与之后的默认浏览器，也是iPhone与IPAD和iPod touch的指定浏览器。</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="/static/imgs/bootimgs/safari-logo.jpg"
+                         alt="Safari">
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-opera">
+            <div class="row feature">
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="/static/imgs/bootimgs/opera-logo.jpg"
+                         alt="Opera">
+                </div>
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">Opera <span class="text-muted">小众但易用</span>
+                    </h2>
+
+                    <p class="lead">Opera浏览器，是一款挪威Opera Software ASA公司制作的支持多页面标签式浏览的网络浏览器。
+                        是跨平台浏览器可以在Windows、Mac和Linux三个操作系统平台上运行。.</p>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-ie">
+            <div class="row feature">
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">IE <span class="text-muted">你懂的</span></h2>
+
+                    <p class="lead">Internet Explorer，原称Microsoft Internet Explorer(6版本以前)和Windows Internet
+                        Explorer(7，8，9，10版本)，
+                        简称IE，是美国微软公司推出的一款网页浏览器。它采用的排版引擎(俗称内核)为Trident。</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="/static/imgs/bootimgs/ie-logo.jpg"
+                         alt="IE">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!--页脚的版权信息，pull-right这个类的作用是放到右边，相当于右浮动。
+    -->
+    <footer>
+        <p class="pull-right"><a href="#top">回到顶部</a></p>
+        <p>&copy; 2014 慕课网</p>
+    </footer>
+</div>
+
+<!--弹出框-->
+<div class="modal fade" tabindex="-1" role="dialog" id="about">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--弹出框的头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">关于</h4>
+            </div>
+            <!--弹出框的内容-->
+            <div class="modal-body">
+                <p>慕课网隶属于北京慕课科技中心(有限合伙)，是一家从事互联网免费教学的网络教育公司。秉承“开拓、创新、公平、分享”的精神，
+                    将互联网特性全面的应用在教育领域，致力于为教育机构及求学者打造一站式互动在线教育品牌。</p>
+            </div>
+            <!--弹出框的底部-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">了解了</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

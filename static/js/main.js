@@ -1,76 +1,83 @@
 $(function () {
 
-    /* 主页点击登录弹出登录框 */
-    $('#login-btn').on('click', function () {
-        var loginform = $('#loginform');
-        if(loginform.hasClass('hide')){
-            loginform.removeClass('hide');
-        }else{
-            loginform.addClass('hide');
+    /* 头像的上传 */
+
+    // bindAvatar1();
+    // bindAvatar2();
+    // bindAvatar3();
+    bindAvatar();
+
+    function bindAvatar() {
+        // 针对不同版本兼容性的做特殊处理
+        if (window.URL.createObjectURL) {
+            bindAvatar2();
+        } else if (window.FileReader) {
+            bindAvatar3();
+        } else {
+            bindAvatar1();
         }
+    }
 
-    });
+    function bindAvatar1() {
+        $('#imgSelect').change(function () {
+            // $(this)[0]把jquery对象变成dom对象
+            var file_obj = $(this)[0].files[0];
+            // Ajax发送后台，并获取路径，在img的src上一写
+            console.log(file_obj)
+        })
+    }
 
-    /* 极验验证码登录 */
-    var handlerPopup = function (captchaObj) {
-        // 成功的回调
-        captchaObj.onSuccess(function () {
-            var validate = captchaObj.getValidate();
-            // 首先获取用户填写的用户名和密码，直接从input框取就行。
-            var username = $('#username1').val();
-            var password = $('#password1').val();
-            $.ajax({
-                url: "/login/", // 进行二次验证
-                type: "post",
-                dataType: "json",
-                data: {
-                    username: username,
-                    password: password,
-                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
-                    geetest_challenge: validate.geetest_challenge,
-                    geetest_validate: validate.geetest_validate,
-                    geetest_seccode: validate.geetest_seccode
-                },
-                success: function (data) {
-                    if (data.status) {
-                        // 有错误，需要在页面上显示
-                        $('.login-error').text(data.msg);
-                    } else {
-                        // 没有问题登录成功
-                        location.href = data.msg;
-                    }
-                }
+    function bindAvatar2() {
+        // 本地上传预览
+        $('#imgSelect').change(function () {
+            var file_obj = $(this)[0].files[0];
+            // 使用window.URL.createObjectURL可以创建一个对象
+            // 相当于已经把文件上传到浏览器了，而不是提交给后台
+            var v = window.URL.createObjectURL(file_obj);
+            // 对浏览器兼容是有问题的。ie10以下就有问题了。
+            $('#previewimg').attr('src', v);
+            $('#previewimg').load(function () {
+                // 这个方法并不会自动进行图片的释放，需要手动释放
+                // 而且释放不能加载完了就直接释放而是
+                // 等图片在浏览器加载了再内存中释放v
+                window.URL.revokeObjectURL(v);
             });
-        });
 
-        $("#popup-submit").click(function () {
-            captchaObj.show();
-        });
-        // 将验证码加到id为captcha的元素里
-        captchaObj.appendTo("#popup-captcha");
-        // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
-    };
+        })
+    }
 
-    $("#username1, #password1").focus(function () {
-        $('.login-error').text("");
-    });
+    function bindAvatar3() {
+        // 本地上传预览
+        $('#imgSelect').change(function () {
+            var file_obj = $(this)[0].files[0];
+            // fileReader对象也可以帮助完成预览的效果
+            // 相当于已经把文件上传到浏览器了，而不是提交给后台
+            var reader = new FileReader();
+            // 相当于把读取到的文件放到这个对象（内存）
+            reader.readAsDataURL(file_obj);
+            // 把内存的数据放到浏览器显示，只要reader有内容
+            // 就会进行加载，然后触发执行函数。
+            // FileReader会自动帮你释放内存占用
+            reader.onload = function () {
+                $('#previewimg').attr('src', this.result)
+            }
+        })
 
-    // 验证开始需要向网站主后台获取id，challenge，success（是否启用failback）
-    $.ajax({
-        url: "/pc-geetest/register?t=" + (new Date()).getTime(), // 加随机数防止缓存
-        type: "get",
-        dataType: "json",
-        success: function (data) {
-            // 使用initGeetest接口
-            // 参数1：配置参数
-            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
-            initGeetest({
-                gt: data.gt,
-                challenge: data.challenge,
-                product: "popup", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
-            }, handlerPopup);
-        }
+    }
+
+    //
+    // $('.avatar').mousemove(function () {
+    //     $(this).css('width','150px')
+    // })
+
+
+    $('.authcode img').on('click', function () {
+        // 通过加问号实现刷新的效果
+        // 个人觉得加时间戳也是可以解决问题的。
+        // $(this).attr('src', this.src + '?' )
+        // 永远取第0个，也就是永远取原来的src
+        // 通过修改让连接后面不是一直叠加问号，而是叠加时间戳。
+        var imgsrc = this.src.split('?')[0];
+        $(this).attr('src', imgsrc + '?' + Number(new Date()))
     });
 });
