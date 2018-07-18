@@ -33,6 +33,7 @@ def register(request):
         else:
             print('验证有错误的话会走这里')
             print(obj.errors)
+            print(type(obj.errors))
         return render(request, 'register.html', {'obj': obj})
     obj = RegisterForm(request)
     return render(request, 'register.html', {'obj': obj})
