@@ -11,10 +11,10 @@ class RegisterForm(Form):
         min_length=6,
         required=True,
         error_messages={
-                                    'required': '用户名不能为空',
-                                    'max_lenght': '最大长度请不要超过32',
-                                    'min_length': '请输入至少6个字符',
-                                    },
+            'required': '用户名不能为空',
+            'max_length': '最大长度请不要超过32',
+            'min_length': '请输入至少6个字符',
+        },
         widget=widgets.TextInput(
             attrs={'class': 'form-control', 'placeholder': '请输入您的用户名', })
         )
@@ -25,7 +25,7 @@ class RegisterForm(Form):
         required=True,
         error_messages={
             'required': '用户名不能为空',
-            'max_lenght': '最大长度请不要超过32个字符',
+            'max_length': '最大长度请不要超过32个字符',
             'min_length': '请输入至少6个字符',
         },
         widget=widgets.TextInput(

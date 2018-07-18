@@ -1,15 +1,17 @@
 import json
+from io import BytesIO
 
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
+from django.conf import settings
+from django.contrib import auth
+
+from utils.auth_code import rd_check_code
 from main import models
 from main import form
 from main.form import RegisterForm
+
 from geetest import GeetestLib
-from django.conf import settings
-from django.contrib import auth
-from io import BytesIO
-from utils.auth_code import rd_check_code
 
 
 def boot(request):
@@ -26,11 +28,10 @@ def register(request):
         print('POST请求过来了！！')
         # 同时接受用户发过来的数据和文件，我们在这里重新加工了Form类，需要多传递一个request参数
         obj = RegisterForm(request, request.POST, request.FILES)
-        print(obj)
-        print(type(obj))
         if obj.is_valid():
             print(obj.cleaned_data)
         else:
+            print('验证有错误的话会走这里')
             print(obj.errors)
         return render(request, 'register.html', {'obj': obj})
     obj = RegisterForm(request)
