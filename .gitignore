@@ -8,3 +8,7 @@ build
 
 # Pycharm:
 /.idea/
+
+# Pipenv
+Pipfile
+Pipfile.lock
