@@ -83,6 +83,11 @@ class RegisterForm(Form):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.request = request
 
+    def clean_avatar(self):
+        if not self.cleaned_data.get('avatar'):
+            # self.cleaned_data['avatar'] = '/static/imgs/head/default/default1.jpg'
+            return '/static/imgs/head/default/default1.jpg'
+
     def clean_auth_code(self):
         input_code = self.cleaned_data['auth_code']
         session_code = self.request.session.get('auth_code')
