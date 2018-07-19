@@ -4,9 +4,14 @@ from django.core.exceptions import ValidationError
 
 # 用户注册相关Form组件定义
 class RegisterForm(Form):
+    """
+    RegisterForm的实例中的fields是一个有序的字典，简单来说也就是我们写的这字段都是有顺序的
+    一个一个往下的来匹配的。
+    """
 
     # 用户名form组件
     username = fields.CharField(
+        label='用户名',
         max_length=32,
         min_length=6,
         required=True,
@@ -20,6 +25,7 @@ class RegisterForm(Form):
         )
     # 用户昵称form组件
     nickname = fields.CharField(
+        label='昵称',
         max_length=32,
         min_length=6,
         required=True,
@@ -32,8 +38,18 @@ class RegisterForm(Form):
             attrs={'class': 'form-control', 'placeholder': '请输入您的昵称'}
         )
     )
+    # 用户邮箱字段
+    email = fields.EmailField(
+        label='邮箱',
+        required=True,
+        widget=widgets.TextInput(
+            attrs={'class': 'form-control', 'placeholder': '请输入您的密码'}
+        )
+    )
+
     # 用户密码form组件
     password = fields.CharField(
+        label='密码',
         max_length=32,
         min_length=10,
         required=True,
@@ -48,6 +64,7 @@ class RegisterForm(Form):
     )
     # 确认密码form组件
     re_password = fields.CharField(
+        label='确认密码',
         max_length=32,
         min_length=10,
         required=True,
@@ -67,6 +84,7 @@ class RegisterForm(Form):
         )
     )
     auth_code = fields.CharField(
+        label='验证码',
         error_messages={
             'required': '验证码不能为空'
         },
@@ -83,10 +101,11 @@ class RegisterForm(Form):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.request = request
 
-    def clean_avatar(self):
-        if not self.cleaned_data.get('avatar'):
-            # self.cleaned_data['avatar'] = '/static/imgs/head/default/default1.jpg'
-            return '/static/imgs/head/default/default1.jpg'
+    # def clean_avatar(self):
+    #     avatar = self.cleaned_data.get('avatar')
+    #     if not avatar:
+    #         return '/static/imgs/head/default/default1.jpg'
+    #     return avatar
 
     def clean_auth_code(self):
         input_code = self.cleaned_data['auth_code']

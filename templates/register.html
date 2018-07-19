@@ -11,44 +11,51 @@
     <form novalidate action="/register/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            <label for="{{ obj.username.id_for_label }}">用户名</label>
+            <label for="{{ obj.username.id_for_label }}">{{ obj.username.label }}</label>
             {{ obj.username }}
-            {% if obj.errors.username.0 %}
+            {% if obj.errors.username %}
                 <span>{{ obj.errors.username.0 }}</span>
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="{{ obj.nickname.id_for_label }}">用户昵称</label>
+            <label for="{{ obj.nickname.id_for_label }}">{{ obj.nickname.label }}</label>
             {{ obj.nickname }}
-            {% if obj.errors.nickname.0 %}
+            {% if obj.errors.nickname %}
                 <span>{{ obj.errors.nickname.0 }}</span>
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="{{ obj.password.id_for_label }}">密码</label>
+            <label for="{{ obj.email.id_for_label }}">{{ obj.email.label }}</label>
+            {{ obj.email }}
+            {% if obj.errors.email %}
+                <span>{{ obj.errors.email.0 }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ obj.password.id_for_label }}">{{ obj.password.label }}</label>
             {{ obj.password }}
-            {% if obj.errors.password.0 %}
+            {% if obj.errors.password %}
                 <span>{{ obj.errors.password.0 }}</span>
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="{{ obj.re_password.id_for_label }}">确认密码</label>
+            <label for="{{ obj.re_password.id_for_label }}">{{ obj.re_password.label }}</label>
             {{ obj.re_password }}
-            {% if obj.errors.re_password.0 %}
+            {% if obj.errors.re_password %}
                 <span>{{ obj.errors.re_password.0 }}</span>
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="{{ obj.auth_code.id_for_label }}">验证码</label>
+            <label for="{{ obj.auth_code.id_for_label }}">{{ obj.auth_code.label }}</label>
             <div class="authcode clearfix">
                 {{ obj.auth_code }}
-                {% if obj.errors.auth_code.0 %}
+                {% if obj.errors.auth_code %}
                     <span>{{ obj.errors.auth_code.0 }}</span>
                 {% endif %}
                 <img src="/auth_code/" alt="" title="点击更新">
             </div>
         </div>
-        <input type="submit" class="btn btn-primary btn-block" value="注册">
+        <button type="submit" class="btn btn-primary btn-block">注册</button>
         <div class="avatar">
             <img id='previewimg' src="/static/imgs/head/default/default1.jpg" alt="">
             {{ obj.avatar }}

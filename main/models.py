@@ -7,10 +7,11 @@ class User(models.Model):
 
     uid = models.BigAutoField(primary_key=True)
     username = models.CharField(verbose_name='用户名', max_length=32, unique=True)
-    password = models.CharField(verbose_name='密码', max_length=128)
     nickname = models.CharField(verbose_name='昵称', max_length=32)
+    password = models.CharField(verbose_name='密码', max_length=128)
     email = models.EmailField(verbose_name='邮箱', unique=True)
-    avatar = models.ImageField(verbose_name='头像', upload_to='static/imgs')
+    # avatar = models.ImageField(verbose_name='头像', upload_to='static/imgs')
+    avatar = models.ImageField(verbose_name='头像', default='/static/imgs/head/default/default1.jpg')
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     def __str__(self):

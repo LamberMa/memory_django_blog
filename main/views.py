@@ -1,4 +1,6 @@
 import json
+import os
+import time
 from io import BytesIO
 
 from django.shortcuts import render, HttpResponse, redirect
@@ -31,7 +33,30 @@ def register(request):
         # 同时接受用户发过来的数据和文件，我们在这里重新加工了Form类，需要多传递一个request参数
         obj = RegisterForm(request, request.POST, request.FILES)
         if obj.is_valid():
+            avatar = obj.cleaned_data.get('avatar')
+            if avatar:
+                # 拼接存储图片的url路径
+                file_name = "%s_%s.%s" % (obj.cleaned_data['username'],
+                                          str(time.time()).split('.')[0],
+                                          avatar.content_type.split('/')[-1],)
+                file_url = os.path.join('static/imgs/head/user', file_name)
+                with open(file_url, 'wb') as file_handler:
+                    for chunk in avatar.chunks():
+                        file_handler.write(chunk)
+                obj.cleaned_data['avatar'] = os.path.join('/', file_url)
+            else:
+                obj.cleaned_data.pop('avatar')
+
+            obj.cleaned_data.pop('re_password')
+            obj.cleaned_data.pop('auth_code')
             print(obj.cleaned_data)
+            try:
+                models.User.objects.create(**obj.cleaned_data)
+            except Exception as e:
+                print(e)
+
+            return redirect('/')
+
         return render(request, 'register.html', {'obj': obj})
 
 
@@ -157,5 +182,6 @@ def auth_code(request):
     stream = BytesIO()
     img.save(stream, 'png')
     request.session['auth_code'] = code
+    print(code)
     # 把内存中读取到的图片内容返回就可以了。
     return HttpResponse(stream.getvalue())
