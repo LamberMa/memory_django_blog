@@ -1,4 +1,4 @@
-from django.forms import fields , Form, widgets
+from django.forms import fields, Form, widgets
 from django.core.exceptions import ValidationError
 
 
@@ -67,6 +67,9 @@ class RegisterForm(Form):
         )
     )
     auth_code = fields.CharField(
+        error_messages={
+            'required': '验证码不能为空'
+        },
         widget=widgets.TextInput(
             attrs={'class': 'form-control', 'placeholder': '验证码', },
         ),
@@ -77,7 +80,7 @@ class RegisterForm(Form):
     # 因此我们可以调用父类的构造函数，定义一下request
     # 在实例化的时候多传递一个request就可以了，重新封装
     def __init__(self, request, *args, **kwargs):
-        super(RegisterForm, self).__init__()
+        super(RegisterForm, self).__init__(*args, **kwargs)
         self.request = request
 
     def clean_auth_code(self):

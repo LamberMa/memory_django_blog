@@ -16,6 +16,32 @@ div#register {
   margin-left: -200px;
   margin-top: -250px;
 }
+div#register .form-group {
+  position: relative;
+}
+div#register .form-group span {
+  text-indent: 1em;
+  width: 250px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  position: absolute;
+  top: 26px;
+  left: 400px;
+  border-radius: 4px;
+  background-color: #c1e2b3;
+}
+div#register .form-group span:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  right: 100%;
+  top: 10px;
+  border-top: 5px solid transparent;
+  border-right: 10px solid #c1e2b3;
+  border-bottom: 5px solid transparent;
+}
 div#register .avatar {
   width: 100px;
   height: 100px;
