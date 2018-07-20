@@ -65,8 +65,9 @@ div#register .avatar input {
   opacity: 0;
 }
 div#register .authcode input {
-  /* Bootstrap默认会使form-control下的所有input的width为100%，为了让input和这个验证码
-         在一行显示，因此单独设置一下这个input框的占用宽度的百分比。
+  /*
+      Bootstrap默认会使form-control下的所有input的width为100%，为了让input和这个验证码
+      在一行显示，因此单独设置一下这个input框的占用宽度的百分比。
        */
   width: 65%;
   float: left;

@@ -42,7 +42,7 @@
             <label for="{{ obj.re_password.id_for_label }}">{{ obj.re_password.label }}</label>
             {{ obj.re_password }}
             {% if obj.errors.re_password %}
-                <span>{{ obj.errors.re_password.0 }}</span>
+                <span>{{ obj.non_field_errors.0 }}</span>
             {% endif %}
         </div>
         <div class="form-group">

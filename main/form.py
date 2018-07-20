@@ -101,12 +101,6 @@ class RegisterForm(Form):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.request = request
 
-    # def clean_avatar(self):
-    #     avatar = self.cleaned_data.get('avatar')
-    #     if not avatar:
-    #         return '/static/imgs/head/default/default1.jpg'
-    #     return avatar
-
     def clean_auth_code(self):
         input_code = self.cleaned_data['auth_code']
         session_code = self.request.session.get('auth_code')
@@ -123,16 +117,17 @@ class RegisterForm(Form):
         password1 = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('re_password')
         if password1 == password2:
+            # 这里其实不return值也是可以的，看clean方法内部。
             return self.cleaned_data
         # 这个异常会默认放到一个特殊的key：__all__这个key中
         # 前端要想去这个__all__中的数据的话不能用obj.errors.__all__
         # 当然后端可以这样取，obj.errors['__all__']或者obj.errors[NON_FIELD_ERRORS]
         # 但是在前段上面两种方式都不能显示出来，需要用如下的形式去显示
         # obj.non_field_errors，这样就说明了，取整体的错误和取单个字段的错误信息的方式是不一致的。
-        raise ValidationError('密码不一致')
+        raise ValidationError('两次密码不一致')
         # 或者可以直接手动绑定错误信息，前者是字段名，后者是报错。
         # 这样在前端就可以直接进行调用了。
-        # self.add_error('password2', ValidationError('密码不一致'))
+        # self.add_error('re_password', ValidationError('密码不一致'))
 
 
 class LoginForm(Form):
