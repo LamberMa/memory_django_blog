@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="register">
-    <form novalidate action="/register/" method="post" enctype="multipart/form-data">
+    <form id="login-form" novalidate action="/register/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="{{ obj.username.id_for_label }}">{{ obj.username.label }}</label>
