@@ -108,6 +108,10 @@ class RegisterForm(Form):
         if is_exist:
             # self.add_error('username', '用户名已经存在，请尝试其他用户名')
             raise ValidationError('用户名已经存在，请尝试其他用户名')
+        else:
+            # 这里记得给人家返回值，否则默认是一个None
+            # 哎，自己光写bug了。。。。
+            return username
 
     def clean_auth_code(self):
         input_code = self.cleaned_data['auth_code']

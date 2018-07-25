@@ -57,37 +57,41 @@ def register(request):
 
             obj.cleaned_data.pop('re_password')
             obj.cleaned_data.pop('auth_code')
+
             try:
-                print(obj.cleaned_data)
                 models.User.objects.create(**obj.cleaned_data)
                 print('插入成功')
-                ret['status'] = 1
                 ret['msg'] = '注册成功！'
                 return HttpResponse(json.dumps(ret))
             except Exception as e:
-                ret['msg'] = e
-
-        # 这里采用两种不同的写法，可以使用JsonResponse也可以先用json.dumps然后HTTPResponse
-        # JsonResponse本身就是HttpResponse的一个子类
-        ret['status'] = 0
-        ret['msg'] = obj.errors
-        ret_json = json.dumps(ret)
-        return HttpResponse(ret_json)
-
-
-def check_user(request):
-    ret = {'status': 1, 'msg': ''}
-    if request.method == 'GET':
-        username = request.GET.get('username')
-        if username:
-            is_exist = models.User.objects.filter(username=username)
-            if is_exist:
                 ret['status'] = 0
-                ret['msg'] = '用户名已存在！'
+                ret['msg'] = '插入数据库有错误'
+                print(e)
                 return HttpResponse(json.dumps(ret))
-            else:
-                ret['msg'] = '用户名可用~'
-                return HttpResponse(json.dumps(ret))
+        else:
+            # 这里采用两种不同的写法，可以使用JsonResponse也可以先用json.dumps然后HTTPResponse
+            # JsonResponse本身就是HttpResponse的一个子类
+            ret['status'] = 0
+            ret['msg'] = obj.errors
+            ret_json = json.dumps(ret)
+            return HttpResponse(ret_json)
+
+
+# 检查用户名是否可用的函数
+def check_user(request):
+    # 1表示帐号是可以使用的，0表示帐号已经被占用了。首先初始化一个空字典
+    # 默认发的就是get请求，所以这里也就不做什么判断了。
+    ret = {'status': True, 'msg': ''}
+    username = request.GET.get('username')
+    # 如果用户被占用的话应该可以查到值，如果没有被占用的话应该返回的是一个空的queryset
+    is_exist = models.User.objects.filter(username=username)
+    if is_exist:
+        ret['status'] = False
+        ret['msg'] = '用户名已存在'
+        return HttpResponse(json.dumps(ret))
+    else:
+        # ret['msg'] = '用户名尚未注册可以使用'
+        return HttpResponse(json.dumps(ret))
 
 
 def get_geetest(request):
