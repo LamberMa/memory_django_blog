@@ -80,4 +80,75 @@ $(function () {
         var imgsrc = this.src.split('?')[0];
         $(this).attr('src', imgsrc + '?' + Number(new Date()))
     });
+
+
+    $('button[type=button]').on('click', function () {
+        var formdata = new FormData();
+        // 获取到用户上传的所有的数据，注意csrftoken不要忘掉
+        formdata.append('username', $('#id_username').val());
+        formdata.append('nickname', $('#id_nickname').val());
+        formdata.append('email', $('#id_email').val());
+        formdata.append('password', $('#id_password').val());
+        formdata.append('re_password', $('#id_re_password').val());
+        formdata.append('auth_code', $('#id_auth_code').val());
+        formdata.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+        formdata.append('avatar', $('#imgSelect')[0].files[0]);
+        $.ajax({
+            url: '/register/',
+            type: 'post',
+            data: formdata,
+            // 告诉jquery不要处理我的数据
+            contentType: false,
+            // 告诉jquery不要设置content-type
+            processData: false,
+            dataType: 'JSON',
+            success: function(arg){
+                console.log(arg);
+                if(arg.status){
+                    console.log('证明没有错误')
+                }else{
+                    // 证明status=0是存在错误的
+                    $.each(arg.msg, function (k, v) {
+                        if(k==='auth_code'){
+                            $('#id_auth_code').parent().next('span').text(v[0]).parent().addClass('has-error');
+                        }else{
+                            $('#id_'+k).next('span').text(v[0]).parent().addClass('has-error');
+                        }
+
+                    })
+                }
+            }
+        })
+    });
+
+    $('form input').focus(function () {
+        // $(this)也就是当前点击的标签，也就是当前你点击的这个input框
+        if($(this).attr('id')==='id_auth_code'){
+           $(this).parent().next('span').text('').parent().removeClass('has-error');
+        } else{
+           $(this).next('span').text('').parent().removeClass('has-error');
+        }
+
+    });
+
+    // $('#id_username').blur(function () {
+    //     var username=$('#id_username').val();
+    //     $.ajax({
+    //         url: '/check_user/',
+    //         method: 'get',
+    //         data: {'username': username},
+    //         success: function (arg) {
+    //             console.log(arg);
+    //             console.log(arg.status);
+    //             console.log(typeof arg.status);
+    //             if(arg.status===1) {
+    //                 console.log('can use');
+    //                 $('#id_username').next().text('账号可用').parent().addClass('has-success');
+    //             }else{
+    //                 console.log('can not use');
+    //                 $('#id_username').next().text('当前账号已被占用~').parent().addClass('has-error');
+    //             }
+    //         }
+    //     })
+    // })
 });

@@ -27,7 +27,9 @@ urlpatterns = [
     path('ajax_login/', views.ajax_login),
     path('pc-geetest/register', views.get_geetest),
     path('login/', views.login),
+    # 注册相关页面
     path('register/', views.register),
+    path('check_user/', views.check_user),
     # 测试相关的页面
     path('bootstrap/', views.boot),
     # 获取验证码
