@@ -80,4 +80,80 @@ $(function () {
         var imgsrc = this.src.split('?')[0];
         $(this).attr('src', imgsrc + '?' + Number(new Date()))
     });
+
+
+    $('button[type=button]').on('click', function () {
+        var formdata = new FormData();
+        // 获取到用户上传的所有的数据，注意csrftoken不要忘掉
+        console.log($('#id_username').val());
+        formdata.append('username', $('#id_username').val());
+        formdata.append('nickname', $('#id_nickname').val());
+        formdata.append('email', $('#id_email').val());
+        formdata.append('password', $('#id_password').val());
+        formdata.append('re_password', $('#id_re_password').val());
+        formdata.append('auth_code', $('#id_auth_code').val());
+        formdata.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+        formdata.append('avatar', $('#imgSelect')[0].files[0]);
+        $.ajax({
+            url: '/register/',
+            type: 'post',
+            data: formdata,
+            // 告诉jquery不要处理我的数据
+            contentType: false,
+            // 告诉jquery不要设置content-type
+            processData: false,
+            dataType: 'JSON',
+            success: function(arg){
+                console.log(arg);
+                if(arg.status){
+                    console.log('证明没有错误')
+                }else{
+                    // 证明status=0是存在错误的
+                    $.each(arg.msg, function (k, v) {
+                        if(k === 'auth_code'){
+                            $('#id_auth_code').parent().next('span').text(v[0]).parent().addClass('has-error');
+                        }else{
+                            $('#id_'+k).next('span').text(v[0]).parent().addClass('has-error');
+                        }
+
+                    })
+                }
+            }
+        })
+    });
+
+    $('form input').focus(function () {
+        // $(this)也就是当前点击的标签，也就是当前你点击的这个input框
+        if($(this).attr('id')==='id_auth_code'){
+           $(this).parent().next('span').text('').parent().removeClass('has-error');
+        } else{
+           $(this).next('span').text('').parent().removeClass('has-error');
+        }
+
+    });
+
+    // 通过失去焦点的方式去判断用户所要注册的用户名是否存在
+    $('#id_username').blur(function () {
+        var username=$('#id_username').val();
+        // 有的时候可能不输入任何内容我也点了其他地方失去焦点，这个时候是没有必要发送ajax请求的，浪费服务器资源！
+        if(username){
+            $.ajax({
+            url: '/check_user/',
+            method: 'get',
+            data: {'username': username},
+            /*
+            * 这个地方是异常重要的，一定要制定以什么数据类型去接受服务器返回来的数据，
+            * 否则的话服务器就是按照str去接受的，由于不是一个对象，也因此无法调用传递回来的对应的属性
+            * 要被坑死了。。。。
+            * */
+            dataType: 'JSON',
+            success: function (arg) {
+                if(!arg.status) {
+                    $('#id_username').next().text(arg.msg).parent().addClass('has-error');
+                }
+            }
+        })
+        }
+
+    })
 });

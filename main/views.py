@@ -31,9 +31,15 @@ def register(request):
         return render(request, 'register.html', {'obj': obj})
     else:
         # 同时接受用户发过来的数据和文件，我们在这里重新加工了Form类，需要多传递一个request参数
+        ret = {'status': 1, 'msg': '', 'info': ''}
         obj = RegisterForm(request, request.POST, request.FILES)
         if obj.is_valid():
+            # 提交的内容符合要求和规则
+            # 这里的avatar其实是一个对象,直接print会把上传文件的文件名打印出来
+            # 我这里是多做了一步重命名的操作，其实如果再没设置upload路径的话也是ok的
+            # 它会直接在数据库插入这个文件名，如果文件有重名的话会默认在后面拼接一个随机字符串。
             avatar = obj.cleaned_data.get('avatar')
+            # 看看用户有没有上传图片，如果上传了就重命名
             if avatar:
                 # 拼接存储图片的url路径
                 file_name = "%s_%s.%s" % (obj.cleaned_data['username'],
@@ -44,20 +50,48 @@ def register(request):
                     for chunk in avatar.chunks():
                         file_handler.write(chunk)
                 obj.cleaned_data['avatar'] = os.path.join('/', file_url)
+            # 如果用户没有上传图片的话那么就把这个key给pop出来，否则会插入空值
+            # pop出来之后会插入字段的默认值，也就是我们设置的默认头像的位置。
             else:
                 obj.cleaned_data.pop('avatar')
 
             obj.cleaned_data.pop('re_password')
             obj.cleaned_data.pop('auth_code')
-            print(obj.cleaned_data)
+
             try:
                 models.User.objects.create(**obj.cleaned_data)
+                print('插入成功')
+                ret['msg'] = '注册成功！'
+                return HttpResponse(json.dumps(ret))
             except Exception as e:
+                ret['status'] = 0
+                ret['msg'] = '插入数据库有错误'
                 print(e)
+                return HttpResponse(json.dumps(ret))
+        else:
+            # 这里采用两种不同的写法，可以使用JsonResponse也可以先用json.dumps然后HTTPResponse
+            # JsonResponse本身就是HttpResponse的一个子类
+            ret['status'] = 0
+            ret['msg'] = obj.errors
+            ret_json = json.dumps(ret)
+            return HttpResponse(ret_json)
 
-            return redirect('/')
 
-        return render(request, 'register.html', {'obj': obj})
+# 检查用户名是否可用的函数
+def check_user(request):
+    # 1表示帐号是可以使用的，0表示帐号已经被占用了。首先初始化一个空字典
+    # 默认发的就是get请求，所以这里也就不做什么判断了。
+    ret = {'status': True, 'msg': ''}
+    username = request.GET.get('username')
+    # 如果用户被占用的话应该可以查到值，如果没有被占用的话应该返回的是一个空的queryset
+    is_exist = models.User.objects.filter(username=username)
+    if is_exist:
+        ret['status'] = False
+        ret['msg'] = '用户名已存在'
+        return HttpResponse(json.dumps(ret))
+    else:
+        # ret['msg'] = '用户名尚未注册可以使用'
+        return HttpResponse(json.dumps(ret))
 
 
 def get_geetest(request):
@@ -122,19 +156,6 @@ def login2(request):
     if request.method == 'GET':
         obj = form.LoginForm()
         return render(request, 'login.html', {'obj': obj})
-    else:
-        obj = form.LoginForm(request.POST)
-        if obj.is_valid():
-            print(obj.cleaned_data)
-            return redirect('https://www.baidu.com')
-        else:
-            print(obj.errors)
-            print(obj.errors['username'])
-            # 拿多个错误信息的第一个，只要错误信息没满足就有问题，我们永远拿第一个就行了
-            # print(obj.errors['password'][0])
-            return render(request, 'login.html', {
-                'obj': obj
-            })
 
 
 def ajax_login(request):

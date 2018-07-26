@@ -1,5 +1,6 @@
 from django.forms import fields, Form, widgets
 from django.core.exceptions import ValidationError
+from main import models
 
 
 # 用户注册相关Form组件定义
@@ -27,12 +28,10 @@ class RegisterForm(Form):
     nickname = fields.CharField(
         label='昵称',
         max_length=32,
-        min_length=6,
         required=True,
         error_messages={
             'required': '用户名不能为空',
             'max_length': '最大长度请不要超过32个字符',
-            'min_length': '请输入至少6个字符',
         },
         widget=widgets.TextInput(
             attrs={'class': 'form-control', 'placeholder': '请输入您的昵称'}
@@ -44,7 +43,8 @@ class RegisterForm(Form):
         required=True,
         widget=widgets.TextInput(
             attrs={'class': 'form-control', 'placeholder': '请输入您的密码'}
-        )
+        ),
+        error_messages={'required': '邮箱不能为空', },
     )
 
     # 用户密码form组件
@@ -80,7 +80,8 @@ class RegisterForm(Form):
     avatar = fields.FileField(
         required=False,
         widget=widgets.FileInput(
-            attrs={'id': 'imgSelect', },
+            # 查一下accept这个约束条件的作用
+            attrs={'id': 'imgSelect', 'accept': 'image/*'},
         )
     )
     auth_code = fields.CharField(
@@ -100,6 +101,17 @@ class RegisterForm(Form):
     def __init__(self, request, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.request = request
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        is_exist = models.User.objects.filter(username=username)
+        if is_exist:
+            # self.add_error('username', '用户名已经存在，请尝试其他用户名')
+            raise ValidationError('用户名已经存在，请尝试其他用户名')
+        else:
+            # 这里记得给人家返回值，否则默认是一个None
+            # 哎，自己光写bug了。。。。
+            return username
 
     def clean_auth_code(self):
         input_code = self.cleaned_data['auth_code']

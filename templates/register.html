@@ -8,63 +8,55 @@
 </head>
 <body>
 <div id="register">
-    <form novalidate action="/register/" method="post" enctype="multipart/form-data">
+    <!--
+    novalidate表示不使用浏览器的校验规则
+    autocomplete，如果设置为off的话，那就是不使用自动补全，或者说叫提示补全
+    -->
+    <form id="login-form" autocomplete="off" novalidate action="/register/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="{{ obj.username.id_for_label }}">{{ obj.username.label }}</label>
             {{ obj.username }}
-            {% if obj.errors.username %}
-                <span>{{ obj.errors.username.0 }}</span>
-            {% endif %}
+            <span class="help-block"></span>
         </div>
         <div class="form-group">
             <label for="{{ obj.nickname.id_for_label }}">{{ obj.nickname.label }}</label>
             {{ obj.nickname }}
-            {% if obj.errors.nickname %}
-                <span>{{ obj.errors.nickname.0 }}</span>
-            {% endif %}
+            <span class="help-block"></span>
         </div>
         <div class="form-group">
             <label for="{{ obj.email.id_for_label }}">{{ obj.email.label }}</label>
             {{ obj.email }}
-            {% if obj.errors.email %}
-                <span>{{ obj.errors.email.0 }}</span>
-            {% endif %}
+            <span class="help-block"></span>
         </div>
         <div class="form-group">
             <label for="{{ obj.password.id_for_label }}">{{ obj.password.label }}</label>
             {{ obj.password }}
-            {% if obj.errors.password %}
-                <span>{{ obj.errors.password.0 }}</span>
-            {% endif %}
+            <span class="help-block"></span>
         </div>
         <div class="form-group">
             <label for="{{ obj.re_password.id_for_label }}">{{ obj.re_password.label }}</label>
             {{ obj.re_password }}
-            {% if obj.errors.re_password %}
-                <span>{{ obj.non_field_errors.0 }}</span>
-            {% endif %}
+            <span class="help-block"></span>
         </div>
         <div class="form-group">
             <label for="{{ obj.auth_code.id_for_label }}">{{ obj.auth_code.label }}</label>
             <div class="authcode clearfix">
                 {{ obj.auth_code }}
-                {% if obj.errors.auth_code %}
-                    <span>{{ obj.errors.auth_code.0 }}</span>
-                {% endif %}
                 <img src="/auth_code/" alt="" title="点击更新">
             </div>
+            <span class="help-block"></span>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">注册</button>
         <div class="avatar">
             <img id='previewimg' src="/static/imgs/head/default/default1.jpg" alt="">
             {{ obj.avatar }}
         </div>
+        <button type="button" class="btn btn-primary btn-block">注册</button>
     </form>
 
 </div>
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/main.js"></script>
+<script src="/static/js/main.js" charset="utf-8"></script>
 </body>
 </html>
