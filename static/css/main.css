@@ -4,6 +4,23 @@ html,
 body {
   height: 100%;
 }
+/* 主页样式 */
+.art-user {
+  width: 80px;
+  height: 80px;
+}
+#content .item-thumb {
+  background-image: url("/static/imgs/posts/1.jpg");
+  width: 745px;
+  height: 280px;
+}
+#content .post-meta {
+  border: 2px solid #000;
+  padding: 30px;
+}
+#content .post-metadata {
+  margin-right: 15px;
+}
 div#register {
   position: relative;
   border: 1px solid #000;

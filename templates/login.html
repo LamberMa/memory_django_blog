@@ -6,31 +6,54 @@
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <style>
-        #bubble{
-            position: relative;
-            width:300px;
-            height:150px;
-            background-color: #5bc0de;
-            margin: 200px auto;
-            border-radius: 10px;
+        .pg-header {
+            height: 48px;
+            width: 100%;
+            background-color: #2459a2;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
-        #bubble:before{
+
+        .left {
             position: absolute;
-            content: '';
-            width: 0;
-            height: 0;
-            right: 100%;
-            top: 60px;
-            border-top: 15px solid transparent;
-            border-right: 30px solid #000;
-            border-bottom: 15px solid transparent;
+            left: 0;
+            top: 48px;
+            bottom: 0;
+            width: 200px;
+            background-color: #ededed;
+        }
+
+        .right {
+            position: absolute;
+            right: 0;
+            left: 200px;
+            top: 48px;
+            bottom: 0;
+            overflow: auto;
+
+        }
+
+        .content {
+            height: 2000px;
+            width: 100%;
+
         }
     </style>
 </head>
+
 <body>
+<div class="pg-header"></div>
+<div>
+    <div class="left">
 
+    </div>
+    <div class="right">
+        <div class="content">
 
-<div id="bubble"></div>
+        </div>
+    </div>
+</div>
 
 
 {#<div id="loginform">#}
@@ -69,10 +92,6 @@
 {#</div>#}
 
 
-
-
-
-
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script>
     function submitForm() {
@@ -84,10 +103,10 @@
             dataType: "JSON",
             success: function (arg) {
                 console.log(arg);
-                if(arg.status){
+                if (arg.status) {
 
-                }else{
-                    $.each(arg.msg, function(index, value){
+                } else {
+                    $.each(arg.msg, function (index, value) {
                         console.log(index, value);
                         var tag = document.createElement('span');
                         tag.innerHTML = value[0];

@@ -116,6 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# 使用zh-hans这样可以让后台使用中文界面
+# LANGUAGE_CODE = 'zh-hans'
+
 
 TIME_ZONE = 'UTC'
 

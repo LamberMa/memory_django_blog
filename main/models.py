@@ -34,6 +34,17 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        """
+        添加这个meta元类，定义verbose_name就可以在admin中见到中文的字段拉啦
+        db_table可以指定在数据库生成的名字到底是什么而不是根据django自己的命名
+        verbose_name的复数会在我们的中文名后面加一个s，我们让它就等于我们设置的verbose_name就好了
+        因为它是是用歪国人写的嘛。
+        """
+        # db_table = 'xxx'
+        verbose_name = '用户信息'
+        verbose_name_plural = verbose_name
+
 
 class Tag(models.Model):
     pass

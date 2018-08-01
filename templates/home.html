@@ -27,8 +27,8 @@
             <!-- 头部，以及导航内容 -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
+                    <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">时光轴</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -52,9 +52,48 @@
     </nav>
 </header>
 
-<div id="content">
-    <section></section>
-    <aside></aside>
+<div id="content" class="container">
+    <div class="row">
+        <section class="col-md-8">
+            <div class="article">
+                <div id="index-post-image">
+                    <a href="#">
+                        <div class="item-thumb"></div>
+                    </a>
+                </div>
+                <div class="post-meta">
+                    <h2>欢迎使用XXX</h2>
+                    <p class="summary">如果你看到这篇文章，证明你已经安装成功了。</p>
+                    <div class="line"></div>
+                    <div class="text-muted">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="post-metadata">lamber</span>
+                        <i class="glyphicon glyphicon-time"></i>
+                        <span class="post-metadata">2018年4月20日</span>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-comment"></i>
+                            <span>3条评论</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <aside class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Basic panel example
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">广告位招租</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </aside>
+    </div>
 </div>
 
 {#<div id="login-module" style="float: right">#}
@@ -98,6 +137,7 @@
 
 
 <script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <!-- 引入封装了failback的接口--initGeetest -->
 <script src="http://static.geetest.com/static/tools/gt.js"></script>
 <script src="/static/js/main.js"></script>
