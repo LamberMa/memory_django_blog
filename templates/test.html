@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        div{
+            width:200px;
+            height:200px;
+            background: deeppink;
+            border:5px solid #4cae4c;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-
+<div id="aaa">aaaa</div>
 <script src="/static/js/jquery-3.2.1.min.js"></script>
 <script>
-
+    console.log($('#aaa').outerHeight(true))
 </script>
 </body>
 </html>
