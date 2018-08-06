@@ -1,0 +1,72 @@
+{% extends 'backend/layout.html' %}
+
+{% block extendcss %}
+    <link rel="stylesheet" href="/static/js/editormd/css/editormd.css">
+    <link rel="stylesheet" href="/static/css/edit.css">
+{% endblock %}
+
+{% block maincontent %}
+    <form method="post" action="/article2/" id="article-detail">
+        {% csrf_token %}
+        <div class="edit-page-title form-group">
+            <label for="{{ article.titie.id_for_label }}">{{ article.title.label }}</label>
+            {{ article.title }}
+        </div>
+        <div class="edit-page-title form-group">
+            <label for="{{ article.summary.id_for_label }}">{{ article.summary.label }}</label>
+            {{ article.summary }}
+        </div>
+        <div  id="editormd" class="form-group">
+            {{ article.content }}
+        </div>
+        <div class="row">
+            <div class="edit-page-title form-group col-md-4">
+                <label for="id_date">发布日期</label>
+                <input type="datetime-local" class="form-control" id="id_date">
+            </div>
+            <div class="edit-page-title form-group col-md-4">
+                <label for="{{ article.category.id_for_label }}">{{ article.category.label }}</label>
+                {{ article.category }}
+            </div>
+            <div class="edit-page-title form-group col-md-4">
+                <label for="id_title">标签</label>
+                <input type="date" class="form-control" id="id_date">
+            </div>
+        </div>
+
+        <input type="button" class="btn btn-default" id="submit-article" value="提交">
+    </form>
+{% endblock %}
+
+{% block alternatice_js %}
+    <script src="/static/js/editormd/editormd.min.js"></script>
+    <script>
+        testEditor = editormd();
+        testEditor = editormd("editormd", {
+            width: "100%",
+            height: '600px',
+            path: "/static/js/editormd/lib/",
+            pluginPath: '/static/js/editormd/plugins/',
+            theme: 'default',
+            previewTheme: "default",
+            editorTheme: 'base16-light',
+            codeFold: true,
+            //saveHTMLToTextarea: true,
+            emoji:true
+
+        });
+        $('#submit-article').click(function () {
+            // var content = $('#testeditor').find('textarea').val();
+            $.ajax({
+                url: '/article/',
+                method: 'POST',
+                data: $('#article-detail').serialize(),
+                dataType: 'JSON',
+                success: function (arg) {
+                    console.log(arg)
+                }
+            })
+        })
+
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页2</title>
+    <style>
+        #header{
+            position: absolute;
+            width:270px;
+            left: -270px;
+            top: 0;
+            bottom: 0;
+            overflow: auto;
+            background-color: #5bc0de;
+            opacity: 0.5;
+            z-index: 1000;
+            transition: 0.5s;
+        }
+        #content{
+            transition: 0.5s;
+            position: relative;
+            background: red;
+        }
+        #nav-btn{
+            position: absolute;
+            top:20px;
+            left: 10px;
+            width: 100px;
+            height: 50px;
+            border: 1px solid lightgray;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<nav id="header">
+
+</nav>
+<div id="content">
+    <button id="nav-btn" class="btn">按钮</button>
+</div>
+<footer></footer>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script>
+    $('#nav-btn').on('click', function () {
+        var $header = $('#header');
+        var $content = $("#content");
+        var header_width = $header.position().left;
+        var $button = $("nav-btn");
+        console.log($button.position().left);
+
+        if($header.offset().left<0){
+            $header.css('left', 0);
+            $content.css('left', '270px').css('right','-270px')
+
+        }else{
+            $header.css('left', '-270px');
+            $content.css('left', 0).css('right',0)
+        }
+    })
+</script>
+</body>
+</html>

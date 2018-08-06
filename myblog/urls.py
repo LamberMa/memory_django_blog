@@ -14,14 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from main import views
+from django.urls import path, include
+from frontend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('index/', views.home),
     path('backend/', views.backend),
     path('study/', views.study_models),
+    path('index2/', views.index2),
     path('test/', views.test),
     path('login2/', views.login2),
     path('ajax_login/', views.ajax_login),
@@ -34,6 +35,10 @@ urlpatterns = [
     path('bootstrap/', views.boot),
     # 获取验证码
     path('auth_code/', views.auth_code),
+
+    # 后台操作
+    path('mem-admin/', include("backend.urls")),
+
     # 当没有匹配任何条件的时候就会匹配到默认的首页
     path('', views.home),
 ]

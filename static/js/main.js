@@ -71,7 +71,7 @@ $(function () {
     // })
 
 
-    $('.authcode img').on('click', function () {
+    $('.authcode image').on('click', function () {
         // 通过加问号实现刷新的效果
         // 个人觉得加时间戳也是可以解决问题的。
         // $(this).attr('src', this.src + '?' )

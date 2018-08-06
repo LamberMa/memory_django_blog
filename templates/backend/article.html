@@ -1,0 +1,27 @@
+{% extends 'backend/layout.html' %}
+
+
+{% block maincontent %}
+<div style="margin: 0 auto">
+    <textarea name="content" id="i1" cols="30" rows="10"></textarea>
+</div>
+{% endblock %}
+
+{% block alternatice_js %}
+    <script src="/static/js/kindeditor/kindeditor-all.js"></script>
+    <script>
+        // 通过iframe+form进行伪造ajax的提交方式进行提交
+        // filepostname imgFile是默认值，我们可以自己改。
+        KindEditor.create("#i1", {
+            width: "100%",
+            height: '500px',
+            resizeType: 0,
+            uploadJson: "/mem-admin/uploadimg/",
+            extraFileUploadParams: {
+                "csrfmiddlewaretoken": "{{ csrf_token }}"
+            }
+
+
+        })
+    </script>
+{% endblock %}

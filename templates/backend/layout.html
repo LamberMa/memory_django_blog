@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/backend.css">
+    {% block extendcss %}
+    {% endblock %}
+</head>
+<body>
+<div id="main_content">
+    <nav id="header">
+        <div id="logo">
+            <img src="/static/imgs/icons/gamepad2.png" alt="" title="logo">
+            <span>雨下不停</span>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><i class="glyphicon glyphicon-home"></i>首页</li>
+                <li><i class="glyphicon glyphicon-pencil"></i>撰写文章</li>
+                <li><i class="glyphicon glyphicon-comment"></i>评论管理</li>
+                <li><i class="glyphicon glyphicon-tag"></i>标签管理</li>
+                <li><i class="glyphicon glyphicon-trash"></i>回收站</li>
+                <li><i class="glyphicon glyphicon-cog"></i>系统设置</li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="section">
+        <div class="menu-bar clearfix">
+            <div class="navigate glyphicon glyphicon-list"></div>
+            <div class="avatar">
+                <img src="/static/imgs/head/default/default1.jpg" alt="">
+                <div id="userinfo" class="">
+                    <a href="#">个人资料</a>
+                    <a href="#">注销</a>
+                </div>
+            </div>
+            <div id="userinfo">
+                <a href=""><i class="glyphicon glyphicon-bell"></i>消息</a>
+                <a href=""><i class="glyphicon glyphicon-envelope"></i>邮件</a>
+            </div>
+        </div>
+        <div id="content">
+            {% block maincontent %}
+            {% endblock %}
+        </div>
+        <footer id="footer">我是这个页面的页脚</footer>
+    </div>
+
+</div>
+
+
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/backend.js"></script>
+{% block alternatice_js %}
+{% endblock %}
+</body>
+</html>
