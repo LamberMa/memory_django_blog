@@ -3,7 +3,7 @@ import json
 
 from django.shortcuts import render, HttpResponse, redirect
 
-from backend.forms import ArticleForm
+# from backend.forms import ArticleForm
 
 
 # Create your views here.
@@ -15,12 +15,12 @@ def edit_article(request):
     return render(request, 'backend/article.html')
 
 
-def article2(request):
-    if request.method == "POST":
-        obj = ArticleForm(request.POST)
-        return HttpResponse('xxxx')
-    obj = ArticleForm()
-    return render(request, 'backend/article2.html', {'article': obj})
+# def article2(request):
+#     if request.method == "POST":
+#         obj = ArticleForm(request.POST)
+#         return HttpResponse('xxxx')
+#     obj = ArticleForm()
+#     return render(request, 'backend/article2.html', {'article': obj})
 
 
 def uploadimg(request):
