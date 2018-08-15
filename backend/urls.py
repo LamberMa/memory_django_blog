@@ -16,4 +16,5 @@ urlpatterns = [
     path('article/', views.edit_article),
     path('article2/', views.article2),
     path('uploadimg/', views.uploadimg),
+    path('user/', views.user),
 ]

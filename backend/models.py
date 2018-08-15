@@ -1,10 +1,6 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
 
-
-# Create your models here.
 class User(models.Model):
     """用户表，用户保存用户相关信息"""
 
@@ -13,7 +9,7 @@ class User(models.Model):
     nickname = models.CharField(verbose_name='昵称', max_length=32)
     password = models.CharField(verbose_name='密码', max_length=128)
     email = models.EmailField(verbose_name='邮箱', unique=True)
-    # avatar = models.ImageField(verbose_name='头像', upload_to='static/imgs')
+    # 这里判断用户一开始就使用默认的头像就可以了，默认的头像地址是写死的
     avatar = models.ImageField(verbose_name='头像', default='/static/imgs/head/default/default1.jpg')
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
@@ -25,23 +21,40 @@ class User(models.Model):
         verbose_name_plural = verbose_name
 
 
+class Category(models.Model):
+    """
+    博主个人文章分类表
+    """
+    nid = models.AutoField(primary_key=True)
+    title = models.CharField(verbose_name='分类标题', max_length=32)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "分类表"
+        verbose_name_plural = verbose_name
+
+
 class Article(models.Model):
     """文章表，用户保存用户文章相关信息"""
-    nid = models.BigAutoField(primary_key=True)
+    nid = models.BigAutoField(primary_key=True, verbose_name='文章id')
     title = models.CharField(verbose_name='文章标题', max_length=128)
     summary = models.CharField(verbose_name='文章简介', max_length=255, default='')
     read_count = models.IntegerField(default=0, verbose_name='阅读数')
     comment_count = models.IntegerField(default=0, verbose_name='评论数')
     up_count = models.IntegerField(default=0, verbose_name='点赞数')
     down_count = models.IntegerField(default=0, verbose_name='踩数量')
-    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True, )
+    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True, blank=True, null=True)
     category = models.ForeignKey(verbose_name='文章类型', to='Category', to_field='nid', null=True,
                                  on_delete=models.CASCADE)
+    imgtitle = models.FileField(verbose_name='题图', default='', blank=True, null=True)
     tags = models.ManyToManyField(
         to="Tag",
         through="Article2Tag",
         through_fields=('article', 'tag')
     )
+    user = models.ForeignKey(verbose_name='所属用户', to='User', to_field='uid', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -60,7 +73,8 @@ class Article(models.Model):
 
 class ArticleDetail(models.Model):
     """
-    文章详细表
+    文章详细表，这样设计的原因是，很多用户会浏览文章的简洁，但是未必会点进去看你的文章
+    所以说如果每次扫描文章列表就把所有的文章内容都拿出来的话其实是很浪费性能的，因此分开存储。
     """
     content = models.TextField(verbose_name='文章内容', )
     article = models.OneToOneField(verbose_name='所属文章', to='Article', to_field='nid', on_delete=models.CASCADE)
@@ -93,21 +107,6 @@ class Article2Tag(models.Model):
         unique_together = [
             ('article', 'tag'),
         ]
-
-
-class Category(models.Model):
-    """
-        博主个人文章分类表
-        """
-    nid = models.AutoField(primary_key=True)
-    title = models.CharField(verbose_name='分类标题', max_length=32)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "分类表"
-        verbose_name_plural = verbose_name
 
 
 class UserType(models.Model):

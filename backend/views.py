@@ -4,6 +4,7 @@ import json
 from django.shortcuts import render, HttpResponse, redirect
 
 from backend.forms import ArticleForm
+from backend import models
 
 
 # Create your views here.
@@ -18,9 +19,21 @@ def edit_article(request):
 def article2(request):
     if request.method == "POST":
         obj = ArticleForm(request.POST)
+        if obj.is_valid():
+            article_detail = obj.cleaned_data.pop('content')
+            models.Article.objects.create()
+        else:
+            print(obj.errors)
         return HttpResponse('xxxx')
     obj = ArticleForm()
     return render(request, 'backend/article2.html', {'article': obj})
+
+
+def user(request):
+    if request.method == "POST":
+        pass
+    user_list = models.User.objects.values('uid', 'username', 'nickname', 'email', 'avatar', 'create_time')
+    return render(request, 'backend/user.html', {'user_list': user_list})
 
 
 def uploadimg(request):

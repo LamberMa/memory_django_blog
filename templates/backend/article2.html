@@ -20,17 +20,24 @@
             {{ article.content }}
         </div>
         <div class="row">
-            <div class="edit-page-title form-group col-md-4">
+            <div class="edit-page-title form-group col-md-6">
                 <label for="id_date">发布日期</label>
                 <input type="datetime-local" class="form-control" id="id_date">
             </div>
-            <div class="edit-page-title form-group col-md-4">
+            <div class="edit-page-title form-group col-md-6">
                 <label for="{{ article.category.id_for_label }}">{{ article.category.label }}</label>
                 {{ article.category }}
             </div>
-            <div class="edit-page-title form-group col-md-4">
-                <label for="id_title">标签</label>
-                <input type="date" class="form-control" id="id_date">
+
+        </div>
+        <div class="row">
+            <div class="edit-page-title form-group col-md-6">
+                <label for="{{ article.tag.id_for_label }}">{{ article.tag.label }}</label>
+                {{ article.tag }}
+            </div>
+            <div class="edit-page-title form-group col-md-6">
+                <label for="{{ article.imgfile.id_for_label }}">{{ article.imgfile.label }} <span>（暂时请手动输入图片连接）</span> </label>
+                {{ article.imgfile }}
             </div>
         </div>
 
@@ -56,9 +63,9 @@
 
         });
         $('#submit-article').click(function () {
-            // var content = $('#testeditor').find('textarea').val();
+            console.log('xxx');
             $.ajax({
-                url: '/article/',
+                url: '/mem-admin/article2/',
                 method: 'POST',
                 data: $('#article-detail').serialize(),
                 dataType: 'JSON',

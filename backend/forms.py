@@ -25,19 +25,42 @@ class ArticleForm(Form):
     )
     summary = fields.CharField(
         label="文章摘要",
+        max_length='255',
+        error_messages={
+            'required': '摘要请不要留空',
+            'max_length': '最大请不要超过255个字符',
+        },
         widget=widgets.Textarea(
             attrs={'class': 'form-control', 'rows': 3}
         )
     )
     content = fields.CharField(
+        error_messages={'required': '正文请不要留空', },
         widget=widgets.Textarea({})
     )
 
-    category = fields.MultipleChoiceField(
+    category = fields.ChoiceField(
         label='文章分类',
+        error_messages={'required': '必须选择一个分类', },
         choices=models.Category.objects.values_list('nid', 'title'),
-        widget=widgets.SelectMultiple({
-            'class': 'form-control'
+        widget=widgets.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    tag = fields.CharField(
+        label="文章标签",
+        widget=widgets.TextInput(attrs={
+            'class': 'form-control',
+        })
+    )
+
+    imgfile = fields.CharField(
+        label="文章题图",
+        # 目前传题图不是必要的
+        required=False,
+        widget=widgets.TextInput(attrs={
+            'class': 'form-control',
         })
     )
 
@@ -49,6 +72,3 @@ class ArticleForm(Form):
         """
         super(ArticleForm, self).__init__(*args, **kwargs)
         self.fields['category'].choices = models.Category.objects.values_list('nid', 'title')
-from django.db.backends.mysql import base
-from django.db.backends import utils
-from django.core.management import execute_from_command_line

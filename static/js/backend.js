@@ -12,5 +12,9 @@ $(function () {
             $header.css('left',-200);
             $section.css('left',0);
         }
+    });
+
+    $('.toolbar').find('button').click(function () {
+
     })
 });

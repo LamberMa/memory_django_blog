@@ -1,0 +1,39 @@
+{% extends 'backend/layout.html' %}
+
+{% block extendcss %}
+{% endblock %}
+
+{% block maincontent %}
+    <div class="toolbar clearfix"><button type="button" class="btn btn-primary">添加用户</button></div>
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>用户名</th>
+            <th>头像</th>
+            <th>昵称</th>
+            <th>邮箱</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in user_list %}
+            <tr>
+                {% for item in user.items %}
+                    {% if item.0 == 'avatar' %}
+                        <td><img src="{{ item.1 }}" alt=""></td>
+                    {% else %}
+                        <td>{{ item.1 }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td><a href="#">编辑</a> | <a href="#">删除</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="model hide">123123</div>
+{% endblock %}
+
+{% block alternatice_js %}
+{% endblock %}

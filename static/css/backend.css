@@ -38,7 +38,11 @@
   background: #dcdcdc;
   cursor: pointer;
 }
-#main_content #header #menu ul li i {
+#main_content #header #menu ul li a {
+  text-decoration: none;
+  color: #858896;
+}
+#main_content #header #menu ul li a i {
   margin-right: 10px;
 }
 #main_content #section {
@@ -117,8 +121,28 @@
   width: 95%;
   margin: 0 auto;
 }
+#main_content #section #content .module {
+  width: 300px;
+  height: 200px;
+  background-color: #00a8c6;
+}
+#main_content #section #content .toolbar {
+  margin-bottom: 15px;
+}
+#main_content #section #content .toolbar button {
+  float: right;
+}
+#main_content #section #content table td img {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #8d8687;
+  border-radius: 50%;
+}
 #main_content #section #footer {
   height: 50px;
   margin-top: 30px;
-  background-color: #ac2925;
+  text-align: center;
+  padding: 20px 0;
+  color: #D3d3d3;
+  border-top: 2px solid #858896;
 }
