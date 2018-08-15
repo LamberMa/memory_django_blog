@@ -7,6 +7,7 @@ from backend.forms import ArticleForm
 from backend import models
 
 
+
 # Create your views here.
 def index(request):
     return render(request, 'backend/layout.html')
@@ -16,6 +17,7 @@ def edit_article(request):
     return render(request, 'backend/article.html')
 
 
+<<<<<<< HEAD
 def article2(request):
     if request.method == "POST":
         obj = ArticleForm(request.POST)

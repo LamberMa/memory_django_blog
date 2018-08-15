@@ -109,6 +109,24 @@ class Article2Tag(models.Model):
         ]
 
 
+<<<<<<< HEAD
+=======
+# class Category(models.Model):
+#     """
+#         博主个人文章分类表
+#         """
+#     nid = models.AutoField(primary_key=True)
+#     title = models.CharField(verbose_name='分类标题', max_length=32)
+#
+#     def __str__(self):
+#         return self.title
+#
+#     class Meta:
+#         verbose_name = "分类表"
+#         verbose_name_plural = verbose_name
+
+
+>>>>>>> 2dccedba4beb8b10ca051f1ab48c76fbbb400c22
 class UserType(models.Model):
     caption = models.CharField(max_length=32)
 
