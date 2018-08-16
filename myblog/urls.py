@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from frontend import views
 
 urlpatterns = [
@@ -38,6 +38,7 @@ urlpatterns = [
 
     # 后台操作
     path('mem-admin/', include("backend.urls")),
+    re_path('^qiniutest.html$', views.qn),
 
     # 当没有匹配任何条件的时候就会匹配到默认的首页
     path('', views.home),

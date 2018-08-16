@@ -16,6 +16,11 @@ from frontend.form import RegisterForm
 
 from geetest import GeetestLib
 
+def qn(request):
+    print(request.GET.get('filename'))
+    print(request.GET.get('filesize'))
+    return HttpResponse('...')
+
 
 def boot(request):
     return render(request, 'boot.html')
