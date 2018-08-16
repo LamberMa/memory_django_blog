@@ -17,7 +17,7 @@ def edit_article(request):
     return render(request, 'backend/article.html')
 
 
-<<<<<<< HEAD
+
 def article2(request):
     if request.method == "POST":
         obj = ArticleForm(request.POST)

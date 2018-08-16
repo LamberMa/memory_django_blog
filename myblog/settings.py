@@ -25,7 +25,7 @@ SECRET_KEY = '9qu28zvsj(%q9q(^^k3-w$!9ybk@v!ceqz$w1!uypv6t+-7*8&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.dcgamer.top']
 
 
 # Application definition
