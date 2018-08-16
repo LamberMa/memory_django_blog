@@ -35,9 +35,8 @@ urlpatterns = [
     path('bootstrap/', views.boot),
     # 获取验证码
     path('auth_code/', views.auth_code),
-
-    # 后台操作
-    path('mem-admin/', include("backend.urls")),
+    path('mem-admin/', include("backend.urls")),   # 后台
+    path('album/', include('album.urls')),
     re_path('^qiniutest.html$', views.qn),
 
     # 当没有匹配任何条件的时候就会匹配到默认的首页

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>相册</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <style>
+        #b1{
+            margin-bottom: 20px;
+        }
+        #b2{
+            width: 800px;
+            height: 500px;
+            border: 1px solid #000;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<!--
+关于使用html来上传多张图片的问题
+https://blog.csdn.net/rainbowsmile1/article/details/80403742
+https://blog.csdn.net/WitsMakeMen/article/details/20939965
+https://www.google.co.jp/search?q=django批量上传图片&oq=django批量上传图片&aqs=chrome..69i57j69i61l3.8917j0j4&sourceid=chrome&ie=UTF-8
+https://blog.csdn.net/kbx8916/article/details/53162309
+https://www.tuicool.com/articles/Ub63Yj2
+https://blog.csdn.net/zhu1988renhui/article/details/7936498
+https://zhidao.baidu.com/question/558471261.html?qbl=relate_question_1&word=html5%20multiple%20email
+https://blog.csdn.net/kbx8916/article/details/53162309
+
+-->
+<h1>这里是相册</h1>
+<form method="post" action="/album/index/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" multiple="multiple" />
+    <input type="submit" id="imgSelect" value="上传">
+</form>
+
+
+
+<div id="b2">
+
+</div>
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script>
+
+    $(function () {
+
+        bindAvatar3();
+
+        function bindAvatar3() {
+        // 本地上传预览
+        $('#imgSelect').change(function () {
+            var file_obj = $(this)[0].files[0];
+            // fileReader对象也可以帮助完成预览的效果
+            // 相当于已经把文件上传到浏览器了，而不是提交给后台
+            var reader = new FileReader();
+            // 相当于把读取到的文件放到这个对象（内存）
+            reader.readAsDataURL(file_obj);
+            // 把内存的数据放到浏览器显示，只要reader有内容
+            // 就会进行加载，然后触发执行函数。
+            // FileReader会自动帮你释放内存占用
+            reader.onload = function () {
+                $('#previewimg').attr('src', this.result)
+            }
+        })
+
+    }
+    });
+{#    $('#upload').on('click', function () {#}
+{#        $.ajax({#}
+{#            url: '/album/'#}
+{#        })#}
+{#    })#}
+
+
+
+
+</script>
+</body>
+</html>
