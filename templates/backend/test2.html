@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>test</h1>
+<div class="upload"></div>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/Hsiao-CropUpload/dist/jquery.cropupload.js"></script>
+<script>
+    $('.upload').cropupload({
+    url : 'upload.php',
+    autoload : true,	//如果preview = true，autoload设置无效
+    preview : true,
+    progress : function(process){
+        console.log("上传进度："+process);
+    },
+    success : function(res){
+        console.log("上传成功");
+    },
+    crop : {
+        /* 这部分参数参照Jcrop官方文档 */
+        options : {
+            aspectRatio: 1,		//选框宽高比。说明：width/height
+            allowMove:true,		//允许选框移动
+            allowResize:true,	//允许选框缩放
+            minSize:[50,50],	//选框最小尺寸
+            setSelect: [0,0,100,100]	//设置预选框
+        },
+        callback : function(e,s,c){
+            console.log('选框X轴坐标:'+c.x);
+            console.log('选框Y轴坐标:'+c.y);
+        }
+    }
+});
+</script>
+</body>
+</html>

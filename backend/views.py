@@ -7,7 +7,6 @@ from backend.forms import ArticleForm
 from backend import models
 
 
-
 # Create your views here.
 def index(request):
     return render(request, 'backend/layout.html')
@@ -15,7 +14,6 @@ def index(request):
 
 def edit_article(request):
     return render(request, 'backend/article.html')
-
 
 
 def article2(request):
@@ -50,9 +48,14 @@ def uploadimg(request):
         dic = {
             # error取值0或者是1，url为上传成功的filepath，message表示
             'error': 0,
-            'url': "/"+file_path,
+            'url': "/" + file_path,
             'message': '错了'
         }
         return HttpResponse(json.dumps(dic))
 
+
 from django.db.backends import utils
+
+
+def aaa(request):
+    return render(request, 'backend/test2.html')

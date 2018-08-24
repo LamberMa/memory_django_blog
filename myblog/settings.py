@@ -145,3 +145,19 @@ PC_GEETEST_ID = "891ee859096df2490927b08ed94ce769"
 PC_GEETEST_KEY = "52e60caea2acd42f0db9b268ea8e6806"
 mobile_geetest_id = "7c25da6fe21944cfe507d2f9876775a9"
 mobile_geetest_key = "f5883f4ee3bd4fa8caec67941de1b903"
+
+
+# django-qiniu-storage
+QINIU_ACCESS_KEY = 'oW59DcqC9H89DxEKAJyEbvTx6R7EuA7K2-2rlcF-'
+QINIU_SECRET_KEY = 'zJk139xsjfqEtR-rdohtp5rVOa2wNWJ6IDQzqE6r'
+QINIU_BUCKET_NAME = 'blog-storage'
+QINIU_BUCKET_DOMAIN = 'tuku.dcgamer.top'
+# 使用http
+QINIU_SECURE_URL = False
+# DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'
+# STATICFILES_STORAGE = 'qiniustorage.backends.QiniuStaticStorage'
+
+PREFIX_URL = 'http://'
+MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'
