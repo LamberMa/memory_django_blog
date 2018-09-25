@@ -1,29 +1,94 @@
-# Create your views here.
 import json
 import os
 import time
+import markdown
 from io import BytesIO
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.conf import settings
-from django.contrib import auth
+from django.utils.safestring import mark_safe
 
 from utils.auth_code import rd_check_code
-from frontend import models
+from utils import busybox
+from backend import models
 from frontend import form
 from frontend.form import RegisterForm
 
 from geetest import GeetestLib
 
-def qn(request):
-    print(request.GET.get('filename'))
-    print(request.GET.get('filesize'))
-    return HttpResponse('...')
+
+def home(request):
+    article_list = models.Article.objects.all()
+    return render(request, 'home.html', {
+        'article_list': article_list
+    })
 
 
-def boot(request):
-    return render(request, 'boot.html')
+# 登录模块
+def login(request):
+
+    if request.method == "POST":
+        # 初始化一个字典用于给ajax请求返回数据
+        ret = {'status': 0, 'msg': ''}
+
+        # 从请求中获取到用户名和密码
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # 获取极验活动验证码相关参数
+        gt = GeetestLib(settings.PC_GEETEST_ID, settings.PC_GEETEST_KEY)
+        challenge = request.POST.get(gt.FN_CHALLENGE, '')
+        validate = request.POST.get(gt.FN_VALIDATE, '')
+        seccode = request.POST.get(gt.FN_SECCODE, '')
+        status = request.session[gt.GT_STATUS_SESSION_KEY]
+        user_id = request.session["user_id"]
+        if status:
+            result = gt.success_validate(challenge, validate, seccode, user_id)
+        else:
+            result = gt.failback_validate(challenge, validate, seccode)
+
+        if result:
+            # 如果极验返回的这个result是有内容的，说明验证码验证成功，接下来验证用户个人账号信息
+            user = models.User.objects.filter(username=username, password=busybox.get_rand_str(password)).first()
+            if user:
+                # 用户名密码正确，给用户做登录，将用户的session信息保存到django_session信息中（其实就是数据库中）
+                request.session['user'] = {
+                    'userid': user.uid,
+                    'name': user.username,
+                    'nickname': user.nickname,
+                }
+                # 设置完session以后让用户redirect到根目录
+                ret['msg'] = "/"
+            else:
+                # 当查不到这个用户的时候基本就是用户名或者密码错误了。
+                ret['status'] = 1
+                ret['msg'] = "用户名或密码错误"
+        else:
+            # 如果验证码验证失败，那么返回错误信息
+            ret['status'] = 1
+            ret['msg'] = '验证码错误'
+        return JsonResponse(ret)
+
+
+# 登出模块
+def logout(request):
+    del request.session['user']
+    return redirect('/')
+
+
+def article_detail(request, article_id):
+    article_obj = models.ArticleDetail.objects.filter(article_id=article_id).first()
+    md = markdown.Markdown(extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite', 'markdown.extensions.toc',])
+    article_obj.content = md.convert(article_obj.content)
+    article_obj.toc = md.toc
+    return render(request, 'frontend/article_detail.html', {
+        'article_obj': article_obj,
+    })
+
+
+def tag(request):
+    pass
 
 
 def register(request):
@@ -111,41 +176,6 @@ def get_geetest(request):
     return HttpResponse(response_str)
 
 
-def login(request):
-    if request.method == "POST":
-        # 初始化一个字典用于给ajax请求返回数据
-        ret = {'status': 0, 'msg': ''}
-        # 从请求中获取到用户名和密码
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        # 获取极验活动验证码相关参数
-        gt = GeetestLib(settings.PC_GEETEST_ID, settings.PC_GEETEST_KEY)
-        challenge = request.POST.get(gt.FN_CHALLENGE, '')
-        validate = request.POST.get(gt.FN_VALIDATE, '')
-        seccode = request.POST.get(gt.FN_SECCODE, '')
-        status = request.session[gt.GT_STATUS_SESSION_KEY]
-        user_id = request.session["user_id"]
-        if status:
-            result = gt.success_validate(challenge, validate, seccode, user_id)
-        else:
-            result = gt.failback_validate(challenge, validate, seccode)
-        if result:
-            # 如果极验返回的这个result是有内容的，说明验证成功
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                # 用户名密码正确，给用户做登录
-                auth.login(request, user)
-                ret['msg'] = "/index/"
-            else:
-                # 用户名密码错误
-                ret['status'] = 1
-                ret['msg'] = "用户名或密码错误"
-        else:
-            ret['status'] = 1
-            ret['msg'] = '验证码错误'
-        return JsonResponse(ret)
-
-
 def study_models(request):
     obj = models.UserType.objects.filter(userinfo__username='齐茂森')
     print(obj)
@@ -193,10 +223,6 @@ def index2(request):
 
 def test(request):
     return render(request, 'test.html')
-
-
-def home(request):
-    return render(request, 'home.html')
 
 
 def backend(request):

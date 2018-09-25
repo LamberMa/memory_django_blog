@@ -4,6 +4,8 @@
 // 这里的这个html和body都要设置高度，不设置html只设置body是不会生效的。
 html, body {
   height: 100%;
+  margin: 0;
+  padding: 0 !important;
 }
 
 /* 主页样式 */
@@ -12,9 +14,24 @@ html, body {
   height: 80px;
 }
 
+#login-module{
+
+}
+
 #content{
-  .article{
-    //border: 3px solid #000;
+  .post{
+    padding: 15px 0;
+    border-bottom: 1px solid #EBEBEB;
+    color: #000;
+    a{
+      text-decoration: none;
+      color: #000;
+      font-weight: 200;
+      &:hover{
+        transition: 0.1s;
+        color: #AE81FF;
+      }
+    };
   }
   .item-thumb{
     background-image: url("/static/imgs/posts/1.jpg");

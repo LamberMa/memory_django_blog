@@ -65,12 +65,6 @@ $(function () {
 
     }
 
-    //
-    // $('.avatar').mousemove(function () {
-    //     $(this).css('width','150px')
-    // })
-
-
     $('.authcode image').on('click', function () {
         // 通过加问号实现刷新的效果
         // 个人觉得加时间戳也是可以解决问题的。
@@ -80,7 +74,6 @@ $(function () {
         var imgsrc = this.src.split('?')[0];
         $(this).attr('src', imgsrc + '?' + Number(new Date()))
     });
-
 
     $('button[type=button]').on('click', function () {
         var formdata = new FormData();
@@ -155,5 +148,5 @@ $(function () {
         })
         }
 
-    })
+    });
 });

@@ -1,4 +1,5 @@
 .edit-page-title{}
 .edit-page-title label{font-size: 18px;}
 .edit-page-title span{font-size:14px;font-weight: normal;}
+.edit-page-title textarea{resize: none;}
 #editormd{margin-bottom: 18px;}

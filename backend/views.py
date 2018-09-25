@@ -20,8 +20,10 @@ def article2(request):
     if request.method == "POST":
         obj = ArticleForm(request.POST)
         if obj.is_valid():
+            print(request.POST)
             article_detail = obj.cleaned_data.pop('content')
-            models.Article.objects.create()
+            models.Article.objects.create(**obj.cleaned_data)
+            # models.ArticleDetail.objects.create(content=article_detail, article_id=obj.cleaned_data.)
         else:
             print(obj.errors)
         return HttpResponse('xxxx')

@@ -3,11 +3,27 @@
 html,
 body {
   height: 100%;
+  margin: 0;
+  padding: 0 !important;
 }
 /* 主页样式 */
 .art-user {
   width: 80px;
   height: 80px;
+}
+#content .post {
+  padding: 15px 0;
+  border-bottom: 1px solid #EBEBEB;
+  color: #000;
+}
+#content .post a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 200;
+}
+#content .post a:hover {
+  transition: 0.1s;
+  color: #AE81FF;
 }
 #content .item-thumb {
   background-image: url("/static/imgs/posts/1.jpg");

@@ -107,27 +107,6 @@ class Article2Tag(models.Model):
         unique_together = [
             ('article', 'tag'),
         ]
+        verbose_name = '文章标签关联表'
+        verbose_name_plural = verbose_name
 
-
-
-# class Category(models.Model):
-#     """
-#         博主个人文章分类表
-#         """
-#     nid = models.AutoField(primary_key=True)
-#     title = models.CharField(verbose_name='分类标题', max_length=32)
-#
-#     def __str__(self):
-#         return self.title
-#
-#     class Meta:
-#         verbose_name = "分类表"
-#         verbose_name_plural = verbose_name
-
-
-
-class UserType(models.Model):
-    caption = models.CharField(max_length=32)
-
-    def __str__(self):
-        return self.caption

@@ -1,14 +1,4 @@
 $(function () {
-    /* 主页点击登录弹出登录框 */
-    $('#login-btn').on('click', function () {
-        var loginform = $('#loginform');
-        if (loginform.hasClass('hide')) {
-            loginform.removeClass('hide');
-        } else {
-            loginform.addClass('hide');
-        }
-
-    });
 
     /* 极验验证码登录 */
     var handlerPopup = function (captchaObj) {
@@ -16,8 +6,9 @@ $(function () {
         captchaObj.onSuccess(function () {
             var validate = captchaObj.getValidate();
             // 首先获取用户填写的用户名和密码，直接从input框取就行。
-            var username = $('#username1').val();
-            var password = $('#password1').val();
+            var username = $('#loginname').val();
+            var password = $('#loginpass').val();
+            var checkbox = $('#popup-captcha').next().find("input[type='checkbox']").is(':checked');
             $.ajax({
                 url: "/login/", // 进行二次验证
                 type: "post",
@@ -25,6 +16,7 @@ $(function () {
                 data: {
                     username: username,
                     password: password,
+                    remember: checkbox,
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                     geetest_challenge: validate.geetest_challenge,
                     geetest_validate: validate.geetest_validate,
@@ -42,9 +34,10 @@ $(function () {
             });
         });
 
-        $("#popup-submit").click(function () {
-            captchaObj.show();
-        });
+        // $("#popup-submit").click(function () {
+        //     captchaObj.show();
+        // });
+
         // 将验证码加到id为captcha的元素里
         captchaObj.appendTo("#popup-captcha");
         // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>雨下不停</title>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
@@ -31,53 +33,113 @@
                     <li><a href="#">时光轴</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Dropdown <span class="caret"></span></a>
+                           aria-expanded="false">笔记 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="#">Python</a></li>
+                            <li><a href="#">运维自动化</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">页面 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Python面试题汇总</a></li>
+                            <li><a href="#">运维自动化</a></li>
                         </ul>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/register/">注册</a></li>
-                    <li><a href="#">登录</a></li>
+                    {% if not request.session.user %}
+                        <li><a href="/register/">注册</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
+                    {% else %}
+                        <li><a href="#">{{ request.session.user.nickname }}</a></li>
+                        <li><a href="/logout/">注销</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 
+<!--登录验证模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">用户登录</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">用户名</label>
+                        <input type="email" class="form-control" id="loginname" placeholder="登录名">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">密码</label>
+                        <input type="password" class="form-control" id="loginpass" placeholder="用户密码">
+                    </div>
+                    <div id="popup-captcha"></div>
+                    <span class="login-error"></span>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> 记住我
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="userlogin">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--内容主体内容部分-->
 <div id="content" class="container">
     <div class="row">
+        <!--文章部分 Start-->
         <section class="col-md-8">
-            <div class="article">
-                <div id="index-post-image">
-                    <a href="#">
-                        <div class="item-thumb"></div>
-                    </a>
-                </div>
-                <div class="post-meta">
-                    <h2>欢迎使用XXX</h2>
-                    <p class="summary">如果你看到这篇文章，证明你已经安装成功了。</p>
-                    <div class="line"></div>
-                    <div class="text-muted">
-                        <i class="glyphicon glyphicon-user"></i>
-                        <span class="post-metadata">lamber</span>
-                        <i class="glyphicon glyphicon-time"></i>
-                        <span class="post-metadata">2018年4月20日</span>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-comment"></i>
-                            <span>3条评论</span>
-                        </a>
+            {#            <div class="article">#}
+            {#                <div id="index-post-image">#}
+            {#                    <a href="#">#}
+            {#                        <div class="item-thumb"></div>#}
+            {#                    </a>#}
+            {#                </div>#}
+            {#                <div class="post-meta">#}
+            {#                    <h2>欢迎使用XXX</h2>#}
+            {#                    <p class="summary">如果你看到这篇文章，证明你已经安装成功了。</p>#}
+            {#                    <div class="line"></div>#}
+            {#                    <div class="text-muted">#}
+            {#                        <i class="glyphicon glyphicon-user"></i>#}
+            {#                        <span class="post-metadata">lamber</span>#}
+            {#                        <i class="glyphicon glyphicon-time"></i>#}
+            {#                        <span class="post-metadata">2018年4月20日</span>#}
+            {#                        <a href="#">#}
+            {#                            <i class="glyphicon glyphicon-comment"></i>#}
+            {#                            <span>3条评论</span>#}
+            {#                        </a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
+            {% for article in article_list %}
+                <article class="post">
+                    <a href="/article/{{ article.nid }}.html"><h2>{{ article.title }}</h2></a>
+                    <p><i class="fa fa-camera-retro fa-fw"><span>{{ article.create_time }}</span></i>&nbsp&nbsp&nbsp<span>
+                        <i class="fa fa-comments-o fa-fw"></i>评论({{ article.up_count }})</span></p>
+                    <div class="post-content">
+                        <p>{{ article.summary }}</p>
                     </div>
-                </div>
-            </div>
+                </article>
+            {% endfor %}
         </section>
+        <!--文章部分 End-->
+
+        <!--侧边栏 Start-->
         <aside class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -89,50 +151,24 @@
                     <h3 class="panel-title">广告位招租</h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <li>文章总数：4</li>
+                    <li>评论数：4</li>
+                    <li>哈哈</li>
+                    <li>啊啊啊啊</li>
                 </div>
             </div>
         </aside>
+        <!--侧边栏 End-->
+    </div>
+    <div class="row">
+        <section class="col-md-8">
+            这里放分页
+        </section>
     </div>
 </div>
 
-{#<div id="login-module" style="float: right">#}
-{#    <!--如果这里当前没有session中的用户信息的时候才会显示登录的内容-->#}
-{#    {% if not request.session.userinfo %}#}
-{#        <a href="#" id="login-btn">登录</a>#}
-{#        <div id="loginform" class='hide'>#}
-{#            <form class="form-horizontal">#}
-{#                {% csrf_token %}#}
-{#                <div class="form-group">#}
-{#                    <label for="inputusername" class="col-sm-3 control-label">用户名</label>#}
-{#                    <div class="col-sm-9">#}
-{#                        <input type="text" class="form-control" id="username1" placeholder="用户名">#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp&nbsp&nbsp&nbsp码</label>#}
-{#                    <div class="col-sm-9">#}
-{#                        <input type="password" class="form-control" id="password1" placeholder="Password">#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="inputPassword3" class="col-sm-3 control-label">验证码</label>#}
-{#                    <div class="col-sm-9" id="popup-captcha">#}
-{##}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <div class="col-sm-offset-2 col-sm-10">#}
-{#                        <a class="btn btn-default" id="popup-submit">登录</a>#}
-{#                        <span class="login-error"></span>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-{#    {% else %}#}
-{#        <a href="#">欢迎您，{{ request.session.userinfo.nickname }}</a>#}
-{#    {% endif %}#}
-{#</div>#}
+
+<!--页脚-->
 <footer></footer>
 
 
@@ -140,6 +176,6 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <!-- 引入封装了failback的接口--initGeetest -->
 <script src="http://static.geetest.com/static/tools/gt.js"></script>
-<script src="/static/js/main.js"></script>
+<script src="/static/js/login.js"></script>
 </body>
 </html>

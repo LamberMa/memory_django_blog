@@ -1,44 +1,33 @@
-"""myblog URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include, re_path
 from frontend import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('index/', views.home),
-    path('backend/', views.backend),
+
     path('study/', views.study_models),
     path('index2/', views.index2),
     path('test/', views.test),
     path('login2/', views.login2),
     path('ajax_login/', views.ajax_login),
     path('pc-geetest/register', views.get_geetest),
-    path('login/', views.login),
     # 注册相关页面
     path('register/', views.register),
     path('check_user/', views.check_user),
-    # 测试相关的页面
-    path('bootstrap/', views.boot),
     # 获取验证码
     path('auth_code/', views.auth_code),
     path('mem-admin/', include("backend.urls")),   # 后台
-    path('album/', include('album.urls')),
-    re_path('^qiniutest.html$', views.qn),
 
+    # 用户登录提交的url地址
+    path('login/', views.login),
+    # 用户注销提交的url地址
+    path('logout/', views.logout),
+    # 匹配文章详情页对应的具体的文章链接
+    path('article/<int:article_id>.html', views.article_detail),
+    # 基于tag的访问
+    path('tag/<int:tag_id>', views.tag),
     # 当没有匹配任何条件的时候就会匹配到默认的首页
     path('', views.home),
 ]
